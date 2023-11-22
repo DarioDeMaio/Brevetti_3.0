@@ -1,2 +1,2 @@
 # Brevetti_3.0
-Progetto sicurezza dei dati.
+Progetto del corso Magistrale "Sicurezza dei dati".
