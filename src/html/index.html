@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <a href="prova.html">CIAOOO</a>
+
+    <script>
+        
+        async function postData() {
+            const url = 'http://localhost:3000/Brevetto/number';
+            const data = { number: 5 };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+            console.log("fatto la post");
+            getData();
+        }
+
+        async function getData() {
+            const url = 'http://localhost:3000/Brevetto/number';
+
+            const response = await fetch(url);
+            const responseData = await response.json();
+
+            const h1 = document.createElement('h1');
+            h1.textContent = `Number: ${responseData.number}`;
+            document.body.appendChild(h1);
+        }
+        for(i = 0; i < 10; i++){
+            postData();
+        }
+    </script>
+
+</body>
+</html>

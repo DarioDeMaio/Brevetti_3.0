@@ -38,7 +38,7 @@
   "sourceMap": "96:242:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;96:242:0;;;;;;;",
   "deployedSourceMap": "96:242:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;96:242:0;;;;;;;;;;;;;;;;;;;;;;;;261:73;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;261:73:0;;;;;;;;;;;;;;;;;:::i;:::-;;177:78;;;:::i;:::-;;;;;;;;;;;;;;;;;;;261:73;321:7;310:8;:18;;;;261:73;:::o;177:78::-;219:7;241:8;;234:15;;177:78;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.8.22;\r\n//creating smart contract \r\ncontract Brevetto { \r\n\tuint256 private myNumber; \r\n\t\r\n    //defining function \r\n\tfunction getNumber() public view returns (uint256) { \r\n\t\treturn myNumber; \r\n\t} \r\n\r\n\tfunction setNumber(uint256 _number) public { \r\n\t\tmyNumber = _number; \r\n\t} \r\n}\r\n",
-  "sourcePath": "C:\\Users\\demai\\OneDrive\\Desktop\\Brevetti\\contracts\\Brevetto.sol",
+  "sourcePath": "C:\\Users\\demai\\OneDrive\\Desktop\\Brevetti_Finale\\Brevetti_3.0\\contracts\\Brevetto.sol",
   "ast": {
     "absolutePath": "project:/contracts/Brevetto.sol",
     "exportedSymbols": {
@@ -601,12 +601,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xcDa427A9A340D8bf0476Ce1FC2311268BBDb4B4E",
-      "transactionHash": "0x7596cad913c00587322ada4463eb5fe1e2eaef764ea70d3bff8d3f6b2744e83c"
+      "address": "0x3Da9f2DC92c007F03B4d74ddB97F0f60e18ADAd2",
+      "transactionHash": "0x2293f5f1df3e2002dfb466d754256a1d54d81071361fa62e41ca377e9dd5cb84"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-11-26T18:42:18.250Z",
+  "updatedAt": "2023-11-26T19:12:44.909Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
