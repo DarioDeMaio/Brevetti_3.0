@@ -18,6 +18,7 @@ contract("Brevetto", (accounts) => {
                 numberToSet,
                 "The stored number should match the number set"
             );
+            
         });
     });
 });
