@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 const rpcEndpoint = 'HTTP://127.0.0.1:7545';
-const web3 = new Web3(rpcEndpoint);
+let web3 = new Web3(rpcEndpoint);
 
 app.use(express.json());
 
@@ -20,6 +20,20 @@ async function getContractAddress(contractName) {
 
   return deployedNetwork.address;
 }
+
+// app.use(async (req, res, next) => {
+//   if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+//     web3 = new Web3(window.ethereum);
+//     try {
+//       await window.ethereum.enable();
+//     } catch (error) {
+//       console.error("User denied account access");
+//     }
+//   } else {
+//     web3 = new Web3(new Web3.providers.HttpProvider(rpcEndpoint));
+//   }
+//   next();
+// });
 
 app.get('/:contractName/number', async (req, res) => {
   const { contractName } = req.params;

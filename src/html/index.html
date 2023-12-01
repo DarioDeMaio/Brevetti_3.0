@@ -1,9 +1,64 @@
 <!DOCTYPE html>
-<html>
 <head>
 </head>
 <body>
     <a href="prova.html">CIAOOO</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+
+    <script>
+        async function postData() {
+            const url = 'http://localhost:3000/Brevetto/number';
+            const data = { number: 5 };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+            console.log("fatto la post");
+            getData();
+        }
+
+        async function getData() {
+            const url = 'http://localhost:3000/Brevetto/number';
+
+            const response = await fetch(url);
+            const responseData = await response.json();
+
+            const h1 = document.createElement('h1');
+            h1.textContent = `Number: ${responseData.number}`;
+            document.body.appendChild(h1);
+        }
+
+        async function connectToMetamask() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.enable();
+                    console.log("Metamask connected");
+                } catch (error) {
+                    console.error("User denied account access");
+                }
+            } else {
+                console.error("Metamask not detected");
+            }
+        }
+        connectToMetamask();
+        for(i = 0; i < 10; i++){
+            postData();
+        }
+    </script>
+
+</body>
+</html>
+
+    <!-- <a href="prova.html">CIAOOO</a>
 
     <script>
         
@@ -39,7 +94,5 @@
         for(i = 0; i < 10; i++){
             postData();
         }
-    </script>
+    </script> -->
 
-</body>
-</html>
