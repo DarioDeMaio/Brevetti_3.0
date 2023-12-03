@@ -21,20 +21,6 @@ async function getContractAddress(contractName) {
   return deployedNetwork.address;
 }
 
-// app.use(async (req, res, next) => {
-//   if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
-//     web3 = new Web3(window.ethereum);
-//     try {
-//       await window.ethereum.enable();
-//     } catch (error) {
-//       console.error("User denied account access");
-//     }
-//   } else {
-//     web3 = new Web3(new Web3.providers.HttpProvider(rpcEndpoint));
-//   }
-//   next();
-// });
-
 app.get('/:contractName/number', async (req, res) => {
   const { contractName } = req.params;
   const contractAddress = await getContractAddress(contractName);
@@ -55,10 +41,8 @@ app.post('/:contractName/number', async (req, res) => {
   res.json({ message: 'number set successfully' });
 });
 
-app.use(express.static(path.join(__dirname, 'src/html')));
-
 app.get('/', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'src/html/prova.html'));
 });
 
 const port = 3000;
