@@ -32,17 +32,17 @@ app.get('/:contractName/number', async (req, res) => {
 
 app.post('/:contractName/number', async (req, res) => {
   const { contractName } = req.params;
-  const { number } = req.body;
+  const { number, address } = req.body;
   const accounts = await web3.eth.getAccounts();
   const contractAddress = await getContractAddress(contractName);
   const contractABI = require(`./build/contracts/${contractName}.json`).abi;
   const contract = new web3.eth.Contract(contractABI, contractAddress);
-  const result = await contract.methods.setNumber(number).send({ from: accounts[0] });
+  const result = await contract.methods.setNumber(number).send({ from: address /*accounts[0] */});
   res.json({ message: 'number set successfully' });
 });
 
 app.get('/', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/html/prova.html'));
+  res.sendFile(path.join(__dirname, 'src/html/index.html'));
 });
 
 const port = 3000;

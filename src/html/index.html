@@ -7,9 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
 
     <script>
-        async function postData() {
+        async function postData(address) {
             const url = 'http://localhost:3000/Brevetto/number';
-            const data = { number: 5 };
+            const data = { number: 5, address: address };
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -22,7 +22,7 @@
             const responseData = await response.json();
             console.log(responseData);
 
-            console.log("fatto la post");
+            // console.log("fatto la post");
             getData();
         }
 
@@ -42,6 +42,13 @@
                 try {
                     await window.ethereum.enable();
                     console.log("Metamask connected");
+
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    const currentAddress = accounts[0];
+                    for (let i = 0; i < 10; i++) {
+                        postData(currentAddress);
+                    }
+                    
                 } catch (error) {
                     console.error("User denied account access");
                 }
@@ -50,9 +57,7 @@
             }
         }
         connectToMetamask();
-        for(i = 0; i < 10; i++){
-            postData();
-        }
+        
     </script>
 
 </body>
