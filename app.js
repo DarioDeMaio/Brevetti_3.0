@@ -46,7 +46,7 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/upload', async (req, res)=>{
-  const node = await IPFS.create()
+  //const node = await IPFS.create()
   console.log("server")
   const file = req.body.files;
   const fileName = req.body.fileName;
