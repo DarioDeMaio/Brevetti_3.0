@@ -45,6 +45,39 @@ app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'src/html/index.html'));
 });
 
+app.post('/upload', async (req, res)=>{
+  const node = await IPFS.create()
+  console.log("server")
+  const file = req.body.files;
+  const fileName = req.body.fileName;
+  
+  // const finalFile = {
+  //   path: "/tmp/"+fileName,
+  //   content: file
+  // }
+
+  // for await (const results of node.add(finalFile)){
+  //   console.log(results.cid.toString());
+  // }
+
+
+  // file.mv(filePath, async (err) =>{
+  //     if(err){
+  //         console.log(err);
+  //     }
+
+  //     const fileHash = await addFile(fileName, filePath);
+  //     fs.unlink(filePath, (err)=>{
+  //         if(err){
+  //             console.log(err);
+  //         }
+  //     });
+
+  //     res.render('upload', {fileName, fileHash});
+
+  // })
+});
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

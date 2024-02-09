@@ -3,7 +3,38 @@
 </head>
 <body>
     <a href="prova.html">CIAOOO</a>
+    <h1>Carica il file</h1>
+    <form action="" method="post">
+        <input type="text" id ="name" name="fileName">
+        <input type="file" id="files">
+        <button onclick="getHash()">OK</button>
+    </form>
 
+    <script>
+        
+        async function getHash() {
+            console.log("quiii");
+            let loginForm = document.getElementById("test");
+            let fileName = document.getElementById("name").value;
+            let files = document.getElementById("files").value;
+            console.log(fileName);
+
+            const url = 'http://localhost:3000/upload';
+            const data = { fileName, files };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const responseData = await response.json();
+            console.log(responseData);
+
+    }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
 
     <script>
@@ -56,7 +87,7 @@
                 console.error("Metamask not detected");
             }
         }
-        connectToMetamask();
+        //connectToMetamask();
         
     </script>
 
