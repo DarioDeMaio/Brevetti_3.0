@@ -7,12 +7,13 @@ contract Brevetti {
     address private user;
     string private state;
 
-    constructor(string memory _id, string memory _name, address _user) public{
-        id = _id;
-        name = _name;
-        user = _user;
-        state = "In attesa";
-    }
+    constructor() public{}
+    // constructor(string memory _id, string memory _name, address _user) public{
+    //     id = _id;
+    //     name = _name;
+    //     user = _user;
+    //     state = "In attesa";
+    // }
 
     function getId() public view returns (string memory){
         return id;

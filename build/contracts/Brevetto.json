@@ -43,14 +43,14 @@
     "absolutePath": "project:/contracts/Brevetto.sol",
     "exportedSymbols": {
       "Brevetto": [
-        146
+        124
       ]
     },
-    "id": 147,
+    "id": 125,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 125,
+        "id": 103,
         "literals": [
           "solidity",
           ">=",
@@ -69,19 +69,19 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 146,
+        "id": 124,
         "linearizedBaseContracts": [
-          146
+          124
         ],
         "name": "Brevetto",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 127,
+            "id": 105,
             "name": "myNumber",
             "nodeType": "VariableDeclaration",
-            "scope": 146,
+            "scope": 124,
             "src": "119:24:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -90,7 +90,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 126,
+              "id": 104,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "119:7:1",
@@ -104,54 +104,54 @@
           },
           {
             "body": {
-              "id": 134,
+              "id": 112,
               "nodeType": "Block",
               "src": "228:27:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 132,
+                    "id": 110,
                     "name": "myNumber",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 127,
+                    "referencedDeclaration": 105,
                     "src": "241:8:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 131,
-                  "id": 133,
+                  "functionReturnParameters": 109,
+                  "id": 111,
                   "nodeType": "Return",
                   "src": "234:15:1"
                 }
               ]
             },
             "documentation": null,
-            "id": 135,
+            "id": 113,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getNumber",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 128,
+              "id": 106,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "195:2:1"
             },
             "returnParameters": {
-              "id": 131,
+              "id": 109,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 130,
+                  "id": 108,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 135,
+                  "scope": 113,
                   "src": "219:7:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -160,7 +160,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 129,
+                    "id": 107,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "219:7:1",
@@ -175,7 +175,7 @@
               ],
               "src": "218:9:1"
             },
-            "scope": 146,
+            "scope": 124,
             "src": "177:78:1",
             "stateMutability": "view",
             "superFunction": null,
@@ -183,25 +183,25 @@
           },
           {
             "body": {
-              "id": 144,
+              "id": 122,
               "nodeType": "Block",
               "src": "304:30:1",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 142,
+                    "id": 120,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 140,
+                      "id": 118,
                       "name": "myNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 127,
+                      "referencedDeclaration": 105,
                       "src": "310:8:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -212,11 +212,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 141,
+                      "id": 119,
                       "name": "_number",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 137,
+                      "referencedDeclaration": 115,
                       "src": "321:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -229,29 +229,29 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 143,
+                  "id": 121,
                   "nodeType": "ExpressionStatement",
                   "src": "310:18:1"
                 }
               ]
             },
             "documentation": null,
-            "id": 145,
+            "id": 123,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "setNumber",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 138,
+              "id": 116,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 137,
+                  "id": 115,
                   "name": "_number",
                   "nodeType": "VariableDeclaration",
-                  "scope": 145,
+                  "scope": 123,
                   "src": "280:15:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -260,7 +260,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 136,
+                    "id": 114,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "280:7:1",
@@ -276,19 +276,19 @@
               "src": "279:17:1"
             },
             "returnParameters": {
-              "id": 139,
+              "id": 117,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "304:0:1"
             },
-            "scope": 146,
+            "scope": 124,
             "src": "261:73:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 147,
+        "scope": 125,
         "src": "96:242:1"
       }
     ],
@@ -299,7 +299,7 @@
       "absolutePath": "project:/contracts/Brevetto.sol",
       "exportedSymbols": {
         "Brevetto": [
-          146
+          124
         ]
       }
     },
@@ -316,7 +316,7 @@
             ".22"
           ]
         },
-        "id": 125,
+        "id": 103,
         "name": "PragmaDirective",
         "src": "33:33:1"
       },
@@ -332,17 +332,17 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            146
+            124
           ],
           "name": "Brevetto",
-          "scope": 147
+          "scope": 125
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "myNumber",
-              "scope": 146,
+              "scope": 124,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "uint256",
@@ -355,12 +355,12 @@
                   "name": "uint256",
                   "type": "uint256"
                 },
-                "id": 126,
+                "id": 104,
                 "name": "ElementaryTypeName",
                 "src": "119:7:1"
               }
             ],
-            "id": 127,
+            "id": 105,
             "name": "VariableDeclaration",
             "src": "119:24:1"
           },
@@ -374,7 +374,7 @@
                 null
               ],
               "name": "getNumber",
-              "scope": 146,
+              "scope": 124,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -387,7 +387,7 @@
                   ]
                 },
                 "children": [],
-                "id": 128,
+                "id": 106,
                 "name": "ParameterList",
                 "src": "195:2:1"
               },
@@ -397,7 +397,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 135,
+                      "scope": 113,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -410,17 +410,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 129,
+                        "id": 107,
                         "name": "ElementaryTypeName",
                         "src": "219:7:1"
                       }
                     ],
-                    "id": 130,
+                    "id": 108,
                     "name": "VariableDeclaration",
                     "src": "219:7:1"
                   }
                 ],
-                "id": 131,
+                "id": 109,
                 "name": "ParameterList",
                 "src": "218:9:1"
               },
@@ -428,7 +428,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 131
+                      "functionReturnParameters": 109
                     },
                     "children": [
                       {
@@ -437,26 +437,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 127,
+                          "referencedDeclaration": 105,
                           "type": "uint256",
                           "value": "myNumber"
                         },
-                        "id": 132,
+                        "id": 110,
                         "name": "Identifier",
                         "src": "241:8:1"
                       }
                     ],
-                    "id": 133,
+                    "id": 111,
                     "name": "Return",
                     "src": "234:15:1"
                   }
                 ],
-                "id": 134,
+                "id": 112,
                 "name": "Block",
                 "src": "228:27:1"
               }
             ],
-            "id": 135,
+            "id": 113,
             "name": "FunctionDefinition",
             "src": "177:78:1"
           },
@@ -470,7 +470,7 @@
                 null
               ],
               "name": "setNumber",
-              "scope": 146,
+              "scope": 124,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -482,7 +482,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_number",
-                      "scope": 145,
+                      "scope": 123,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -495,17 +495,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 136,
+                        "id": 114,
                         "name": "ElementaryTypeName",
                         "src": "280:7:1"
                       }
                     ],
-                    "id": 137,
+                    "id": 115,
                     "name": "VariableDeclaration",
                     "src": "280:15:1"
                   }
                 ],
-                "id": 138,
+                "id": 116,
                 "name": "ParameterList",
                 "src": "279:17:1"
               },
@@ -516,7 +516,7 @@
                   ]
                 },
                 "children": [],
-                "id": 139,
+                "id": 117,
                 "name": "ParameterList",
                 "src": "304:0:1"
               },
@@ -541,11 +541,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 127,
+                              "referencedDeclaration": 105,
                               "type": "uint256",
                               "value": "myNumber"
                             },
-                            "id": 140,
+                            "id": 118,
                             "name": "Identifier",
                             "src": "310:8:1"
                           },
@@ -555,41 +555,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 137,
+                              "referencedDeclaration": 115,
                               "type": "uint256",
                               "value": "_number"
                             },
-                            "id": 141,
+                            "id": 119,
                             "name": "Identifier",
                             "src": "321:7:1"
                           }
                         ],
-                        "id": 142,
+                        "id": 120,
                         "name": "Assignment",
                         "src": "310:18:1"
                       }
                     ],
-                    "id": 143,
+                    "id": 121,
                     "name": "ExpressionStatement",
                     "src": "310:18:1"
                   }
                 ],
-                "id": 144,
+                "id": 122,
                 "name": "Block",
                 "src": "304:30:1"
               }
             ],
-            "id": 145,
+            "id": 123,
             "name": "FunctionDefinition",
             "src": "261:73:1"
           }
         ],
-        "id": 146,
+        "id": 124,
         "name": "ContractDefinition",
         "src": "96:242:1"
       }
     ],
-    "id": 147,
+    "id": 125,
     "name": "SourceUnit",
     "src": "33:307:1"
   },
@@ -601,12 +601,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x3347Cba615777035021386d3419aB6511dC90890",
-      "transactionHash": "0xb7cff54809e23539171e53bc950faa3b5857508bdc2a2360fd183f3d9fd011dc"
+      "address": "0xF9a0e9Ed2EB2FefF036d38597f2662398e01C8c3",
+      "transactionHash": "0xc8c75b9ebb9fb8c46e2f794b5a4126d9772e580a8bc96e617050a9c4d5e855ab"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-02-07T19:11:34.907Z",
+  "updatedAt": "2024-02-12T18:33:36.191Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
