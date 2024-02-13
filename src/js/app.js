@@ -91,7 +91,7 @@ App = {
 
         const ipfs = window.ipfs;
         const result = await ipfs.add(brevettoData);
-        const cid = result.cid.toString();
+        const cid = result.path;
 
         // console.log(brevettoData,"\n");
         console.log(cid);

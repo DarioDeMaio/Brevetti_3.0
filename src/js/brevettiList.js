@@ -55,33 +55,57 @@ App2 = {
     },
 
         
-        getList : function(){
-            var factoryInstance;
-        web3.eth.getAccounts(function(error, accounts) {
-            if (error) {
+    getList: function() {
+      var factoryInstance;
+      web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
               console.log(error);
-            }
-      
-            var account = accounts[0];
-            //console.log(typeof account);
-      
-            App2.contracts.Factory.deployed().then(function(instance) {
-                factoryInstance = instance;
-                let list = factoryInstance.getList();
-                console.log("Gli elementi sono: ");
-                console.log(list);
-                return factoryInstance.getList();
-            }).catch(function(err) {
+          }
+  
+          var account = accounts[0];
+  
+          App2.contracts.Factory.deployed().then(function(instance) {
+              factoryInstance = instance;
+              return factoryInstance.getList();
+          }).then(function(list) {
+              console.log("Gli elementi sono: ");
+              console.log(list);
+  
+              
+
+              for (let i = 0; i < list.length; i++) {
+                let data = fetchIPFSData(list[i]); // Chiamata alla funzione per ottenere i dati
+              }
+              return factoryInstance.getList();
+          }).catch(function(err) {
               console.log(err.message);
-            });
           });
+      });
+  }
 
-
-      }
+  
 };
+async function fetchIPFSData(el) {
+  let x = "";
+  try {
+    for await (const chunk of window.ipfs.cat(el)){
+      x += chunk;
+    }
+    //console.log(x);
+    const ipfsResultArray = x.split(",");
+    const jsonString = ipfsResultArray.map(code => String.fromCharCode(code)).join("");
+    const brevettoJSON = JSON.parse(jsonString);
+    console.log(brevettoJSON);
+  } catch (error) {
+      console.log("Errore durante il recupero dei dati da IPFS:", error);
+  }
+  
+}
 
-$(function() {
-  $(document).ready(function() {
-    App2.init();
-  });
-});
+
+
+// $(function() {
+//   $(document).ready(function() {
+//     App2.init();
+//   });
+// });

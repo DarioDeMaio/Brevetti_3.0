@@ -1,7 +1,7 @@
 IPFSStarter = {
   ipfs: null,
   init: async function(){
-      this.ipfs = window.ipfs || await window.Ipfs.create();
+      this.ipfs = window.ipfs || await window.IpfsCore.create();
       window.ipfs = this.ipfs;
   }
 }
@@ -9,6 +9,10 @@ IPFSStarter = {
 $(function(){
   $(window).on('load', async function(){
       await IPFSStarter.init();
-      App.init();
+      try{
+        App.init();
+      }catch{
+        App2.init();
+      }
   });
 });
