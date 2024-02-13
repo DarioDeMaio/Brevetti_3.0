@@ -2,6 +2,7 @@
 pragma solidity >=0.4.22 <0.8.22;
 //creating smart contract 
 import "./Brevetti.sol";
+pragma experimental ABIEncoderV2;
 
 contract Factory{
     Brevetti[] listBrevetti;
@@ -16,8 +17,12 @@ contract Factory{
         listBrevetti.push(b);
     }
 
-    function getList() public view returns(Brevetti[] memory){
-        return listBrevetti;
+    function getList() public view returns(string[] memory){
+        string[] memory listId = new string[](listBrevetti.length);
+        for(uint i = 0; i < listBrevetti.length; i++){
+            listId[i] = listBrevetti[i].getId();
+        }
+        return listId;
     }
 
 }

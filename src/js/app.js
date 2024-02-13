@@ -94,7 +94,7 @@ App = {
         const cid = result.cid.toString();
 
         // console.log(brevettoData,"\n");
-        // console.log(cid);
+        console.log(cid);
 
         var factoryInstance;
         web3.eth.getAccounts(function(error, accounts) {
