@@ -134,7 +134,7 @@
   "sourceMap": "96:1175:0:-;;;248:22;8:9:-1;5:2;;;30:1;27;20:12;5:2;248:22:0;96:1175;;;;;;",
   "deployedSourceMap": "96:1175:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;96:1175:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;642:84;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;642:84:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;981:86;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;981:86:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;478:80;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;478:80:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1075:191;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1075:191:0;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;1075:191:0;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;1075:191:0;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;1075:191:0;;;;;;;;;;;;:::i;:::-;;817:78;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;903:69;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;903:69:0;;;;;;;;;;;;;;;;;;;:::i;:::-;;567:67;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;567:67:0;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;567:67:0;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;567:67:0;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;567:67:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;567:67:0;;;;;;;;;;;;;;;:::i;:::-;;734:75;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;734:75:0;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;734:75:0;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;734:75:0;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;734:75:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;734:75:0;;;;;;;;;;;;;;;:::i;:::-;;642:84;682:13;714:4;707:11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;642:84;:::o;981:86::-;1022:13;1054:5;1047:12;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;981:86;:::o;478:80::-;516:13;548:2;541:9;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;478:80;:::o;1075:191::-;1187:29;;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;1187:29:0;;;1177:40;;;;;;1166:5;1149:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;1149:23:0;;;1139:34;;;;;;:78;1136:123;;;1241:6;;1233:5;:14;;;;;;;:::i;:::-;;1136:123;1075:191;;:::o;817:78::-;857:7;883:4;;;;;;;;;;;876:11;;817:78;:::o;903:69::-;959:5;952:4;;:12;;;;;;;;;;;;;;;;;;903:69;:::o;567:67::-;623:3;618:2;:8;;;;;;;;;;;;:::i;:::-;;567:67;:::o;734:75::-;796:5;789:4;:12;;;;;;;;;;;;:::i;:::-;;734:75;:::o;96:1175::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.8.22;\r\n//creating smart contract \r\ncontract Brevetti {\r\n    string private id; //hash del documento\r\n    string private name;\r\n    address private user;\r\n    string private state;\r\n\r\n    constructor() public{}\r\n    // constructor(string memory _id, string memory _name, address _user) public{\r\n    //     id = _id;\r\n    //     name = _name;\r\n    //     user = _user;\r\n    //     state = \"In attesa\";\r\n    // }\r\n\r\n    function getId() public view returns (string memory){\r\n        return id;\r\n    } \r\n\r\n    function setId(string memory _id) public{\r\n        id = _id;\r\n    }\r\n\r\n    function getName() public view returns (string memory){\r\n        return name;\r\n    }\r\n\r\n    function setName(string memory _name) public{\r\n        name = _name;\r\n    }\r\n\r\n    function getUser() public view returns (address){\r\n        return user;\r\n    }\r\n\r\n    function setUser(address _user) public{\r\n        user = _user;\r\n    } \r\n\r\n    function getState() public view returns (string memory){\r\n        return state;\r\n    }\r\n\r\n    function setState(string calldata _state) external{\r\n        if(keccak256(abi.encodePacked(state)) == keccak256(abi.encodePacked(\"In attesa\"))){\r\n            state = _state;\r\n        }\r\n    }\r\n\r\n}",
-  "sourcePath": "C:\\Users\\demai\\OneDrive\\Desktop\\BREVETTI\\Brevetti_3.0\\contracts\\Brevetti.sol",
+  "sourcePath": "C:\\Users\\dario\\OneDrive\\Desktop\\Brevetti\\Brevetti_3.0-1\\contracts\\Brevetti.sol",
   "ast": {
     "absolutePath": "project:/contracts/Brevetti.sol",
     "exportedSymbols": {
@@ -996,7 +996,7 @@
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 198,
+                              "referencedDeclaration": 185,
                               "src": "1149:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
@@ -1043,7 +1043,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 205,
+                        "referencedDeclaration": 192,
                         "src": "1139:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -1104,7 +1104,7 @@
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 198,
+                              "referencedDeclaration": 185,
                               "src": "1187:3:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
@@ -1151,7 +1151,7 @@
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 205,
+                        "referencedDeclaration": 192,
                         "src": "1177:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -2363,7 +2363,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 205,
+                                  "referencedDeclaration": 192,
                                   "type": "function (bytes memory) pure returns (bytes32)",
                                   "value": "keccak256"
                                 },
@@ -2409,7 +2409,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 198,
+                                          "referencedDeclaration": 185,
                                           "type": "abi",
                                           "value": "abi"
                                         },
@@ -2472,7 +2472,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 205,
+                                  "referencedDeclaration": 192,
                                   "type": "function (bytes memory) pure returns (bytes32)",
                                   "value": "keccak256"
                                 },
@@ -2518,7 +2518,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 198,
+                                          "referencedDeclaration": 185,
                                           "type": "abi",
                                           "value": "abi"
                                         },
@@ -2654,12 +2654,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xd584Bc255bC53B68F17B6288127C829387F4BaA9",
-      "transactionHash": "0xdca1c3154757186b933191d9ec7ed915d041343d4b0a5c99d2c0d91301db3cfc"
+      "address": "0x7c40A47F0f5cC431c679855Aa13Cd8298aa4be41",
+      "transactionHash": "0x98e6217e13fb481d58222a9997a1f909a43cf12ad500ada41558b1677b878812"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-02-12T18:33:36.293Z",
+  "updatedAt": "2024-02-13T19:05:00.037Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

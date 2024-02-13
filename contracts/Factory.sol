@@ -8,11 +8,11 @@ contract Factory{
 
     constructor() public{}
 
-    function createBrevetto(string memory _id, string memory _name, address _user) public{
+    function createBrevetto(string memory _id, string memory _name) public{
         Brevetti b = new Brevetti();
         b.setId(_id);
         b.setName(_name);
-        b.setUser(_user);
+        b.setUser(msg.sender);
         listBrevetti.push(b);
     }
 
