@@ -59,11 +59,29 @@ App3 = {
             const brevettoDetails = await fetchIPFSData(brevettoId);
             console.log("Dettagli del brevetto:", brevettoDetails);
 
-            // Mostra i dettagli nella pagina
             var brevettoDetailsDiv = $("#brevettoDetails");
             brevettoDetailsDiv.append("<p><strong>Nome Brevetto:</strong> " + brevettoDetails.nomeBrevetto + "</p>");
             brevettoDetailsDiv.append("<p><strong>Data di Inserimento:</strong> " + brevettoDetails.dataFormattata + "</p>");
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
+
+
+            // if per controllare lo stato del brevetto
+            // se è già accettato, non devono uscire i bottoni
+            // se è ancora in attesa, i bottoni devono uscire
+            brevettoDetailsDiv.append('<button id="accettazioneBtn" class="btn btn-success" style="margin-right: 20px;">Accettazione</button>');
+            brevettoDetailsDiv.append('<button id="rifiutoBtn" class="btn btn-danger">Rifiuto</button>');
+
+            
+            $("#accettazioneBtn").on("click", function () {
+                // Aggiungi qui la logica per l'accettazione del brevetto
+                console.log("Brevetto accettato!");
+            });
+
+            
+            $("#rifiutoBtn").on("click", function () {
+                // Aggiungi qui la logica per il rifiuto del brevetto
+                console.log("Brevetto rifiutato!");
+            });
         } catch (error) {
             console.error("Errore durante il recupero dei dettagli del brevetto:", error);
         }
