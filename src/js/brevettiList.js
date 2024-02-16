@@ -54,58 +54,57 @@ App2 = {
         });
     },
 
-        
-    getList: function() {
-      var factoryInstance;
-      web3.eth.getAccounts(function(error, accounts) {
-          if (error) {
-              console.log(error);
-          }
-  
-          var account = accounts[0];
-  
-          App2.contracts.Factory.deployed().then(function(instance) {
-              factoryInstance = instance;
-              return factoryInstance.getList();
-          }).then(function(list) {
-              console.log("Gli elementi sono: ");
-              console.log(list);
-  
-              
 
-              for (let i = 0; i < list.length; i++) {
-                let data = fetchIPFSData(list[i]); // Chiamata alla funzione per ottenere i dati
-              }
-              return factoryInstance.getList();
-          }).catch(function(err) {
-              console.log(err.message);
-          });
+getList: async function () {
+  var factoryInstance;
+  try {
+      const list = await App2.contracts.Factory.deployed().then(function (instance) {
+          factoryInstance = instance;
+          return factoryInstance.getList();
       });
-  }
 
-  
+      console.log("Gli elementi sono: ");
+      console.log(list);
+
+      var tableBody = $("#brevettiTableBody");
+      tableBody.empty();
+
+      for (let i = 0; i < list.length; i++) {
+          try {
+              let data = await fetchIPFSData(list[i]);
+              tableBody.append("<tr class='brevetto-row' data-id='" + list[i] + "'><td>" + data.nomeBrevetto + "</td><td>" + data.dataFormattata + "</td></tr>");
+          } catch (error) {
+              console.error("Errore durante il recupero dei dati da IPFS:", error);
+          }
+      }
+
+      $(".brevetto-row").hover(function () {
+        $(this).css("cursor", "pointer");
+      });
+      
+      $(".brevetto-row").click(function () {
+          const brevettoId = $(this).data("id");
+          window.location.href = "../html/brevetto.html?id=" + brevettoId;
+      });
+  } catch (err) {
+      console.error(err.message);
+  }
+}
+
 };
+
+
 async function fetchIPFSData(el) {
   let x = "";
   try {
-    for await (const chunk of window.ipfs.cat(el)){
-      x += chunk;
-    }
-    //console.log(x);
-    const ipfsResultArray = x.split(",");
-    const jsonString = ipfsResultArray.map(code => String.fromCharCode(code)).join("");
-    const brevettoJSON = JSON.parse(jsonString);
-    console.log(brevettoJSON);
+      for await (const chunk of window.ipfs.cat(el)) {
+          x += chunk;
+      }
+      const ipfsResultArray = x.split(",");
+      const jsonString = ipfsResultArray.map(code => String.fromCharCode(code)).join("");
+      return JSON.parse(jsonString);
   } catch (error) {
       console.log("Errore durante il recupero dei dati da IPFS:", error);
+      return {};
   }
-  
 }
-
-
-
-// $(function() {
-//   $(document).ready(function() {
-//     App2.init();
-//   });
-// });

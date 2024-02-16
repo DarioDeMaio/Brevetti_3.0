@@ -13,6 +13,7 @@ $(function(){
         App.init();
       }catch{
         App2.init();
+        App3.init();
       }
   });
 });

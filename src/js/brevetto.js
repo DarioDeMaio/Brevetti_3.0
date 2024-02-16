@@ -1,0 +1,71 @@
+App3 = {
+    web3Provider: null,
+    contracts: {},
+
+    init: async function () {
+        await App3.initWeb3();
+    },
+    
+
+    initWeb3: async function () {
+        if (window.ethereum) {
+            App3.web3Provider = window.ethereum;
+            try {
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+            } catch (error) {
+                console.error("User denied account access");
+            }
+        } else if (window.web3) {
+            App3.web3Provider = window.web3.currentProvider;
+        } else {
+            App3.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+        }
+        web3 = new Web3(window.ethereum);
+
+        return App3.initContract();
+    },
+
+    initContract: function() {
+        $.getJSON('../Factory.json', function(factoryData) {
+            var factory = factoryData;
+            App3.contracts.Factory = TruffleContract(factory);
+        
+            // Set the provider for our contract
+            App3.contracts.Factory.setProvider(App3.web3Provider);
+        
+            $.getJSON('../Brevetti.json', function(brevettiData) {
+                var brevetti = brevettiData;
+                App3.contracts.Brevetti = TruffleContract(brevetti);
+            
+                // Set the provider for our contract
+                App3.contracts.Brevetti.setProvider(App3.web3Provider);
+            
+                // Call getList only after both JSON files are loaded
+                App3.getBrevettoDetails();
+            });
+        });
+    },
+    
+
+    getBrevettoDetails: async function () {
+        // Ottieni il parametro dall'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const brevettoId = urlParams.get('id');
+
+        // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
+        var factoryInstance;
+        try {
+            factoryInstance = await App3.contracts.Factory.deployed();
+            const brevettoDetails = await fetchIPFSData(brevettoId);
+            console.log("Dettagli del brevetto:", brevettoDetails);
+
+            // Mostra i dettagli nella pagina
+            var brevettoDetailsDiv = $("#brevettoDetails");
+            brevettoDetailsDiv.append("<p><strong>Nome Brevetto:</strong> " + brevettoDetails.nomeBrevetto + "</p>");
+            brevettoDetailsDiv.append("<p><strong>Data di Inserimento:</strong> " + brevettoDetails.dataFormattata + "</p>");
+            brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
+        } catch (error) {
+            console.error("Errore durante il recupero dei dettagli del brevetto:", error);
+        }
+    }
+};

@@ -10,7 +10,6 @@ App = {
     
         // Modern dapp browsers...
         if (window.ethereum) {
-          console.log("primo if");
           App.web3Provider = window.ethereum;
           try {
               // Request account access
@@ -23,12 +22,10 @@ App = {
       }
         // Legacy dapp browsers...
         else if (window.web3) {
-          console.log("sec if");
           App.web3Provider = window.web3.currentProvider;
         }
         // If no injected web3 instance is detected, fall back to Ganache
         else {
-          console.log("ter if");
           App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
         }
         web3 = new Web3(App.web3Provider);
@@ -39,7 +36,7 @@ App = {
 
       initContract: function() {
     
-        $.getJSON('Factory.json', function(data) {
+        $.getJSON('../Factory.json', function(data) {
           // Get the necessary contract artifact file and instantiate it with @truffle/contract
           var factory = data;
           App.contracts.Factory = TruffleContract(factory);
@@ -49,7 +46,7 @@ App = {
         
         });
 
-        $.getJSON('Brevetti.json', function(data) {
+        $.getJSON('../Brevetti.json', function(data) {
             // Get the necessary contract artifact file and instantiate it with @truffle/contract
             var brevetti = data;
             App.contracts.Brevetti = TruffleContract(brevetti);
@@ -118,8 +115,3 @@ App = {
 
       }
 };
-// $(function() {
-//   $(window).load(function() {
-//     App.init();
-//   });
-// });
