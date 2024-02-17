@@ -1,6 +1,7 @@
 App = {
     web3Provider:null,
     contracts: {},
+    account: null,
 
     init: async function() {
       return await App.initWeb3();
@@ -13,8 +14,8 @@ App = {
           App.web3Provider = window.ethereum;
           try {
               // Request account access
-              //await window.ethereum.enable();
               await window.ethereum.request({ method: 'eth_requestAccounts' });
+              App.account = window.ethereum.selectedAddress;
           } catch (error) {
               // User denied account access...
               console.error("User denied account access")
@@ -70,6 +71,8 @@ App = {
         
         event.preventDefault();
         
+        var account = window.ethereum.selectedAddress;
+
         var nomeBrevetto = document.getElementById('nomeBrevetto').value;
         var descrizione = document.getElementById('descrizione').value;
         var dataCorrente = new Date();
@@ -99,19 +102,17 @@ App = {
               console.log(error);
             }
       
-            var account = accounts[0];
+            
             //console.log(typeof account);
       
             App.contracts.Factory.deployed().then(function(instance) {
                 factoryInstance = instance;
                 //console.log(factoryInstance.getList());
               // Execute adopt as a transaction by sending account
-              return  factoryInstance.createBrevetto(cid, nomeBrevetto, {from: account});
+              return  factoryInstance.createBrevetto(cid, nomeBrevetto, {from: App.account});
             }).catch(function(err) {
               console.log(err.message);
             });
           });
-
-
       }
 };
