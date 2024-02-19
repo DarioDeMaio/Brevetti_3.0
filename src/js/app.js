@@ -71,7 +71,7 @@ App = {
         
         event.preventDefault();
         
-        var account = window.ethereum.selectedAddress;
+        //var account = window.ethereum.selectedAddress;
 
         var nomeBrevetto = document.getElementById('nomeBrevetto').value;
         var descrizione = document.getElementById('descrizione').value;

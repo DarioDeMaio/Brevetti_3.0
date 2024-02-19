@@ -1,7 +1,7 @@
 App3 = {
     web3Provider: null,
     contracts: {},
-
+    account: null,
     init: async function () {
         await App3.initWeb3();
     },
@@ -12,6 +12,7 @@ App3 = {
             App3.web3Provider = window.ethereum;
             try {
                 await window.ethereum.request({ method: 'eth_requestAccounts' });
+                App3.account = window.ethereum.selectedAddress;
             } catch (error) {
                 console.error("User denied account access");
             }
@@ -70,7 +71,7 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
 
 
-            if(brevettoDetails.state == "attesa")
+            if(!check())
             {
                 brevettoDetailsDiv.append('<button id="accettazioneBtn" class="btn btn-success" style="margin-right: 20px;">Accettazione</button>');
                 brevettoDetailsDiv.append('<button id="rifiutoBtn" class="btn btn-danger">Rifiuto</button>');
@@ -78,6 +79,7 @@ App3 = {
                 $("#accettazioneBtn").on("click", function () {
                     document.getElementById("accettazioneBtn").disabled = true;
                     document.getElementById("rifiutoBtn").disabled = true;
+                    vote("Confermato");
                     console.log("Brevetto accettato!");
                 });
     
@@ -85,6 +87,7 @@ App3 = {
                 $("#rifiutoBtn").on("click", function () {
                     document.getElementById("rifiutoBtn").disabled = true;
                     document.getElementById("accettazioneBtn").disabled = true;
+                    vote("Rifiutato");
                     console.log("Brevetto rifiutato!");
                 });
             }
@@ -95,4 +98,45 @@ App3 = {
             console.error("Errore durante il recupero dei dettagli del brevetto:", error);
         }
     }
+    
 };
+
+function check(){
+    var brevettiInstance;
+                    web3.eth.getAccounts(function(error, accounts) {
+                        if (error) {
+                        console.log(error);
+                        }
+                
+                        App3.contracts.Brevetti.deployed().then(function(instance) {
+                            brevettiInstance = instance;
+                            
+                        const list = brevettiInstance.getVoterAddresses();
+                        for(let i = 0; i < list.length; i++){
+                            if(App3.account == list[i]){
+                                return true;
+                            }
+                        }
+                        return false;
+                        }).catch(function(err) {
+                        console.log(err.message);
+                        });
+                    });
+}
+
+function vote(v){
+    var brevettiInstance;
+                    web3.eth.getAccounts(function(error, accounts) {
+                        if (error) {
+                        console.log(error);
+                        }
+                
+                        App3.contracts.Brevetti.deployed().then(function(instance) {
+                            brevettiInstance = instance;
+                            
+                        return brevettiInstance.addVoter(v, {from: App3.account});
+                        }).catch(function(err) {
+                        console.log(err.message);
+                        });
+                    });
+}

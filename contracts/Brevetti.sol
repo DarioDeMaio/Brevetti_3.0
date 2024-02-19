@@ -1,21 +1,37 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.22;
+pragma experimental ABIEncoderV2;
 //creating smart contract 
 contract Brevetti {
     string internal  id; //hash del documento
     string internal  name;
     address internal  user;
     string internal  state;
-    uint256 internal  timer;
+    mapping(address=>string) internal vote;
+    address[] internal voterAddresses;
 
+    constructor() public {}
 
-    constructor() public{}
-    // constructor(string memory _id, string memory _name, address _user) public{
-    //     id = _id;
-    //     name = _name;
-    //     user = _user;
-    //     state = "In attesa";
-    // }
+    function getVoterAddresses() public view returns (address[] memory){
+        return voterAddresses;
+    } 
+
+    function getVotes() public view returns (address[] memory, string[] memory) {
+        uint256 votersCount = voterAddresses.length;
+        string[] memory votesList = new string[](votersCount);
+        for (uint256 i = 0; i < votersCount; i++) {
+            address voter = voterAddresses[i];
+            votesList[i] = vote[voter];
+        }
+        return (voterAddresses, votesList);
+    }
+
+    function addVoter(string memory _vote) public {
+        require(bytes(vote[msg.sender]).length == 0);
+        voterAddresses.push(msg.sender);
+        vote[msg.sender] = _vote;
+    }
+    
 
     function getId() public view returns (string memory){
         return id;
