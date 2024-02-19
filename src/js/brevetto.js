@@ -52,7 +52,6 @@ App3 = {
         // Ottieni il parametro dall'URL
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
-        var brevetto = null;
 
         // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
@@ -70,8 +69,9 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
 
-
-            if(!check())
+            var isVoter = await check();
+            
+            if(!isVoter)
             {
                 brevettoDetailsDiv.append('<button id="accettazioneBtn" class="btn btn-success" style="margin-right: 20px;">Accettazione</button>');
                 brevettoDetailsDiv.append('<button id="rifiutoBtn" class="btn btn-danger">Rifiuto</button>');
@@ -101,42 +101,37 @@ App3 = {
     
 };
 
-function check(){
-    var brevettiInstance;
-                    web3.eth.getAccounts(function(error, accounts) {
-                        if (error) {
-                        console.log(error);
-                        }
-                
-                        App3.contracts.Brevetti.deployed().then(function(instance) {
-                            brevettiInstance = instance;
-                            
-                        const list = brevettiInstance.getVoterAddresses();
-                        for(let i = 0; i < list.length; i++){
-                            if(App3.account == list[i]){
-                                return true;
-                            }
-                        }
-                        return false;
-                        }).catch(function(err) {
-                        console.log(err.message);
-                        });
-                    });
+async function check() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            var brevettiInstance = await App3.contracts.Brevetti.deployed();
+            const list = await brevettiInstance.getVoterAddresses();
+
+            for (let i = 0; i < list.length; i++) {
+                if (App3.account.toUpperCase() === list[i].toUpperCase()) {
+                    resolve(true);
+                }
+            }
+            resolve(false);
+        } catch (error) {
+            reject(error);
+        }
+    });
 }
 
 function vote(v){
     var brevettiInstance;
-                    web3.eth.getAccounts(function(error, accounts) {
-                        if (error) {
-                        console.log(error);
-                        }
+        web3.eth.getAccounts(function(error, accounts) {
+            if (error) {
+                console.log(error);
+            }
+    
+            App3.contracts.Brevetti.deployed().then(function(instance) {
+                brevettiInstance = instance;
                 
-                        App3.contracts.Brevetti.deployed().then(function(instance) {
-                            brevettiInstance = instance;
-                            
-                        return brevettiInstance.addVoter(v, {from: App3.account});
-                        }).catch(function(err) {
-                        console.log(err.message);
-                        });
-                    });
+                return brevettiInstance.addVoter(v, {from: App3.account});
+            }).catch(function(err) {
+                console.log(err.message);
+            });
+        });
 }
