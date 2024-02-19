@@ -9,11 +9,11 @@ contract Factory{
 
     constructor() public{}
 
-    function createBrevetto(string memory _id, string memory _name) public{
+    function createBrevetto(string memory _id, string memory _name, address user) public{
         Brevetti b = new Brevetti();
         b.setId(_id);
         b.setName(_name);
-        b.setUser(msg.sender);
+        b.setUser(user);
         b.setState("attesa");
         listBrevetti.push(b);
     }
@@ -28,7 +28,7 @@ contract Factory{
 
     function getBrevetto(string memory brevettoId) public view returns (Brevetti) {
         for (uint i = 0; i < listBrevetti.length; i++) {
-            if (keccak256(abi.encodePacked(listBrevetti[i])) == keccak256(abi.encodePacked(brevettoId))) {
+            if (keccak256(abi.encodePacked(listBrevetti[i].getId())) == keccak256(abi.encodePacked(brevettoId))) {
                 return listBrevetti[i];
             }
         }

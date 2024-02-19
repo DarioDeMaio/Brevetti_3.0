@@ -28,6 +28,7 @@ contract Brevetti {
 
     function addVoter(string memory _vote) public {
         require(bytes(vote[msg.sender]).length == 0);
+        require(msg.sender != user);
         voterAddresses.push(msg.sender);
         vote[msg.sender] = _vote;
     }

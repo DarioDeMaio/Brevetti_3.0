@@ -52,12 +52,16 @@ App3 = {
         // Ottieni il parametro dall'URL
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
+        var brevettoUser = null;
 
         // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
         try {
             
             factoryInstance = await App3.contracts.Factory.deployed();
+            
+            brevettoUser = factoryInstance.getBrevetto(brevettoId);
+            console.log("Mammt " + brevettoUser.getUser);
             
 
             const brevettoDetails = await fetchIPFSData(brevettoId);
@@ -69,7 +73,7 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
 
-            var isVoter = await check();
+            var isVoter = await check(brevettoUser);
             
             if(!isVoter)
             {
@@ -90,10 +94,7 @@ App3 = {
                     vote("Rifiutato");
                     console.log("Brevetto rifiutato!");
                 });
-            }
-            
-            
-            
+            }            
         } catch (error) {
             console.error("Errore durante il recupero dei dettagli del brevetto:", error);
         }
@@ -101,23 +102,26 @@ App3 = {
     
 };
 
-async function check() {
-    return new Promise(async (resolve, reject) => {
-        try {
-            var brevettiInstance = await App3.contracts.Brevetti.deployed();
-            const list = await brevettiInstance.getVoterAddresses();
+async function check(brevettoUser) {
+    try {
+        var brevettiInstance = await App3.contracts.Brevetti.deployed();
+        const list = await brevettiInstance.getVoterAddresses();
 
-            for (let i = 0; i < list.length; i++) {
-                if (App3.account.toUpperCase() === list[i].toUpperCase()) {
-                    resolve(true);
-                }
-            }
-            resolve(false);
-        } catch (error) {
-            reject(error);
+        console.log("Account corrente:", App3.account);
+        console.log("Creatore del brevetto:", brevettoUser);
+        
+        if (App3.account === brevettoUser) {
+            console.log("Sei l'utente creatore del brevetto.");
+            return true;
         }
-    });
+
+        return list.some(addr => App3.account.toUpperCase() === addr.toUpperCase());
+    } catch (error) {
+        console.error("Errore durante il controllo:", error);
+        return false;
+    }
 }
+
 
 function vote(v){
     var brevettiInstance;
@@ -128,7 +132,6 @@ function vote(v){
     
             App3.contracts.Brevetti.deployed().then(function(instance) {
                 brevettiInstance = instance;
-                
                 return brevettiInstance.addVoter(v, {from: App3.account});
             }).catch(function(err) {
                 console.log(err.message);

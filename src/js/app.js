@@ -87,7 +87,8 @@ App = {
             nomeBrevetto: nomeBrevetto,
             descrizione: descrizione,
             dataFormattata : dataFormattata,
-            state: "attesa"
+            state: "attesa",
+            user: App.account
         });
 
         const ipfs = window.ipfs;
@@ -103,7 +104,7 @@ App = {
             App.contracts.Factory.deployed().then(function(instance) {
               factoryInstance = instance;
                 
-              return factoryInstance.createBrevetto(cid, nomeBrevetto, {from: App.account});
+              return factoryInstance.createBrevetto(cid, nomeBrevetto, App.account, {from:App.account});
             }).catch(function(err) {
               console.log(err.message);
             });
