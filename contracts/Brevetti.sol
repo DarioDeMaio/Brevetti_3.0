@@ -2,11 +2,11 @@
 pragma solidity >=0.4.22 <0.8.22;
 //creating smart contract 
 contract Brevetti {
-    string private id; //hash del documento
-    string private name;
-    address private user;
-    string private state;
-    uint256 private timer;
+    string internal  id; //hash del documento
+    string internal  name;
+    address internal  user;
+    string internal  state;
+    uint256 internal  timer;
 
 
     constructor() public{}

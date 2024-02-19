@@ -94,14 +94,6 @@ App = {
         const result = await ipfs.add(brevettoData);
         const cid = result.path;
 
-        setTimeout(async () => {
-          // Blocca l'opportunità di accettare o rifiutare il brevetto dopo il timer
-          $("#accettazioneBtn, #rifiutoBtn").prop("disabled", true);
-  
-          console.log("Timeout scaduto.");
-          
-        }, 24 * 60 * 60 * 1000); // 24 ore in millisecondi
-
         var factoryInstance;
         web3.eth.getAccounts(function(error, accounts) {
             if (error) {

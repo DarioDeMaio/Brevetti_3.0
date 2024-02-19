@@ -6,7 +6,6 @@ pragma experimental ABIEncoderV2;
 
 contract Factory{
     Brevetti[] listBrevetti;
-    mapping(string => string) brevettoStates; // Mappatura per associare l'ID del brevetto al suo stato
 
     constructor() public{}
 
@@ -17,9 +16,6 @@ contract Factory{
         b.setUser(msg.sender);
         b.setState("attesa");
         listBrevetti.push(b);
-
-        // Aggiungi l'ID del brevetto e il suo stato alla mappatura
-        brevettoStates[_id] = "attesa";
     }
 
     function getList() public view returns(string[] memory){
@@ -30,8 +26,13 @@ contract Factory{
         return listId;
     }
 
-    function getBrevettoState(string memory brevettoId) public view returns (string memory) {
-        return brevettoStates[brevettoId];
+    function getBrevetto(string memory brevettoId) public view returns (Brevetti) {
+        for (uint i = 0; i < listBrevetti.length; i++) {
+            if (keccak256(abi.encodePacked(listBrevetti[i])) == keccak256(abi.encodePacked(brevettoId))) {
+                return listBrevetti[i];
+            }
+        }
     }
+
 
 }

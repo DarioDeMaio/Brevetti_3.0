@@ -51,11 +51,15 @@ App3 = {
         // Ottieni il parametro dall'URL
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
+        var brevetto = null;
 
         // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
         try {
+            
             factoryInstance = await App3.contracts.Factory.deployed();
+            
+
             const brevettoDetails = await fetchIPFSData(brevettoId);
             console.log("Dettagli del brevetto:", brevettoDetails);
 
