@@ -14,6 +14,7 @@ contract Factory{
         b.setId(_id);
         b.setName(_name);
         b.setUser(msg.sender);
+        b.setState("attesa");
         listBrevetti.push(b);
     }
 

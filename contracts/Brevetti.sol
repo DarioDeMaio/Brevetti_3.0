@@ -6,6 +6,8 @@ contract Brevetti {
     string private name;
     address private user;
     string private state;
+    uint256 private timer;
+
 
     constructor() public{}
     // constructor(string memory _id, string memory _name, address _user) public{
@@ -39,14 +41,14 @@ contract Brevetti {
         user = _user;
     } 
 
+
     function getState() public view returns (string memory){
         return state;
     }
 
     function setState(string calldata _state) external{
-        if(keccak256(abi.encodePacked(state)) == keccak256(abi.encodePacked("In attesa"))){
+        if(keccak256(abi.encodePacked(state)) == keccak256(abi.encodePacked("attesa"))){
             state = _state;
         }
     }
-
 }

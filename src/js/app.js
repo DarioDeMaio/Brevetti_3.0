@@ -86,7 +86,8 @@ App = {
         let brevettoData = JSON.stringify({
             nomeBrevetto: nomeBrevetto,
             descrizione: descrizione,
-            dataFormattata : dataFormattata
+            dataFormattata : dataFormattata,
+            state: "attesa"
         });
 
         const ipfs = window.ipfs;
@@ -102,14 +103,10 @@ App = {
               console.log(error);
             }
       
-            
-            //console.log(typeof account);
-      
             App.contracts.Factory.deployed().then(function(instance) {
-                factoryInstance = instance;
-                //console.log(factoryInstance.getList());
-              // Execute adopt as a transaction by sending account
-              return  factoryInstance.createBrevetto(cid, nomeBrevetto, {from: App.account});
+              factoryInstance = instance;
+                
+              return factoryInstance.createBrevetto(cid, nomeBrevetto, {from: App.account});
             }).catch(function(err) {
               console.log(err.message);
             });
