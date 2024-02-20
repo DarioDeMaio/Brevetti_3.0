@@ -7,9 +7,9 @@ contract Brevetto{
     string private  name;
     address private  user;
     string private  state;
+    uint private balance;
     mapping(address=>string) private vote;
     address[] private voterAddresses;
-    uint private balance;
 
     
     constructor() public {
@@ -17,6 +17,8 @@ contract Brevetto{
     }
 
     //function() external payable{}
+
+    
 
     function addBalance(uint et) private {
         require(et == 1 ether);

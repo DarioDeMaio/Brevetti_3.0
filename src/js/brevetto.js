@@ -52,6 +52,7 @@ App3 = {
         // Ottieni il parametro dall'URL
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
+        
 
         // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
@@ -62,34 +63,34 @@ App3 = {
             const creatorAddress = await factoryInstance.getBrevettoUser(brevettoId);
 
             const brevettoDetails = await fetchIPFSData(brevettoId);
-            console.log("Dettagli del brevetto:", brevettoDetails);
-
+            
             var brevettoDetailsDiv = $("#brevettoDetails");
             brevettoDetailsDiv.append("<p><strong>Nome Brevetto:</strong> " + brevettoDetails.nomeBrevetto + "</p>");
             brevettoDetailsDiv.append("<p><strong>Data di Inserimento:</strong> " + brevettoDetails.dataFormattata + "</p>");
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
 
-            var isVoter = await check(creatorAddress);
+            var isVoter = await check(creatorAddress, factoryInstance, brevettoId);
             
             if(!isVoter)
             {
+                
                 brevettoDetailsDiv.append('<button id="accettazioneBtn" class="btn btn-success" style="margin-right: 20px;">Accettazione</button>');
                 brevettoDetailsDiv.append('<button id="rifiutoBtn" class="btn btn-danger">Rifiuto</button>');
 
                 $("#accettazioneBtn").on("click", function () {
                     document.getElementById("accettazioneBtn").disabled = true;
                     document.getElementById("rifiutoBtn").disabled = true;
-                    vote("Confermato");
-                    console.log("Brevetto accettato!");
+                    vote("Confermato", brevettoId);
+                    
                 });
     
                 
                 $("#rifiutoBtn").on("click", function () {
                     document.getElementById("rifiutoBtn").disabled = true;
                     document.getElementById("accettazioneBtn").disabled = true;
-                    vote("Rifiutato");
-                    console.log("Brevetto rifiutato!");
+                    vote("Rifiutato", brevettoId);
+                    
                 });
             }            
         } catch (error) {
@@ -99,20 +100,33 @@ App3 = {
     
 };
 
-async function check(creatorAddress) {
+async function check(creatorAddress, factoryInstance, brevettoId) {
     try {
-        var brevettiInstance = await App3.contracts.Brevetto.deployed();
-        const list = await brevettiInstance.getVoterAddresses();
-
-        console.log("Account corrente:", App3.account);
-        console.log("Creatore del brevetto:", creatorAddress);
+        //var brevettiInstance = await App3.contracts.Brevetto.deployed();
+        //var brevetti = await factoryInstance.getList();
+        var list= await getListBrevetti();
         
+        var brevettiInstance = null;
+        for(let i = 0; i < list.length; i++){
+            brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
+            if(brevettoId === await brevettiInstance.getId()){
+                break;
+            }
+        }
+        var a = await brevettiInstance.getVotes();
+        var addresses = a[0];
+
         if (App3.account.toUpperCase() === creatorAddress.toUpperCase()) {
-            console.log("Sei l'utente creatore del brevetto.");
             return true;
         }
-
-        return list.some(addr => App3.account.toUpperCase() === addr.toUpperCase());
+        for(let i = 0; i < addresses.length; i++){
+            if(addresses[i].toUpperCase() === App3.account.toUpperCase()){
+                return true;
+            }
+        }
+        return false;
+        //return addresses.some(addr => App3.account.toUpperCase() === addr.toUpperCase());
+        //return false;
     } catch (error) {
         console.error("Errore durante il controllo:", error);
         return false;
@@ -120,24 +134,42 @@ async function check(creatorAddress) {
 }
 
 
-function vote(v){
-    var brevettiInstance;
-        web3.eth.getAccounts(function(error, accounts) {
-            if (error) {
-                console.log(error);
+async function vote(v, brevettoId){
+    try {
+        var list = await getListBrevetti(); // Attendere il completamento della promise
+        
+        for(let i = 0; i < list.length; i++){
+            var brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
+            
+            if(brevettoId === await brevettiInstance.getId()){ // Utilizzare await per ottenere correttamente l'ID
+                web3.eth.getAccounts(function(error, accounts) {
+                    if (error) {
+                        console.log(error);
+                    }
+                    
+                    if (v === 'Rifiutato') {
+                        const amountToSend = web3.utils.toWei('1', 'ether'); // Invia 0.2 Ether
+                        // Invia l'importo specificato insieme alla chiamata di funzione
+                        return brevettiInstance.addVoter(v, { from: App3.account, value: amountToSend });
+                    }
+                    return brevettiInstance.addVoter(v, {from: App3.account});
+                    
+                });
             }
-    
-            App3.contracts.Brevetto.deployed().then(function(instance) {
-                brevettiInstance = instance;
-                if (v === 'Rifiutato') {
-                    console.log("Rifiutato")
-                    const amountToSend = web3.utils.toWei('1', 'ether'); // Invia 0.2 Ether
-                    // Invia l'importo specificato insieme alla chiamata di funzione
-                    return brevettiInstance.addVoter(v, { from: App3.account, value: amountToSend });
-                }
-                return brevettiInstance.addVoter(v, {from: App3.account});
-            }).catch(function(err) {
-                console.log(err.message);
-            });
-        });
+        }
+    } catch (error) {
+        console.error("Errore durante il voto:", error);
+    }
+}
+
+// Chiamata asincrona per ottenere l'elenco dei brevetti
+async function getListBrevetti() {
+    try {
+        const factoryInstance = await App3.contracts.Factory.deployed();
+        const brevettiList = factoryInstance.getListBrevetti();
+        
+        return brevettiList;
+    } catch (error) {
+        console.error("Errore durante il recupero dell'elenco dei brevetti:", error);
+    }
 }

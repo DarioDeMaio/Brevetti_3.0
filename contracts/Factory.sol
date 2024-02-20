@@ -27,6 +27,10 @@ contract Factory{
         return listId;
     }
 
+    function getListBrevetti() public view returns(Brevetto[] memory){
+        return listBrevetti;
+    }
+
     function getBrevettoUser(string memory brevettoId) public view returns (address) {
         for (uint i = 0; i < listBrevetti.length; i++) {
             if (keccak256(abi.encodePacked(listBrevetti[i].getId())) == keccak256(abi.encodePacked(brevettoId))) {
@@ -35,6 +39,5 @@ contract Factory{
         }
         revert("Brevetto non trovato");
     }
-
 
 }
