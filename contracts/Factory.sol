@@ -26,12 +26,13 @@ contract Factory{
         return listId;
     }
 
-    function getBrevetto(string memory brevettoId) public view returns (Brevetti) {
+    function getBrevettoUser(string memory brevettoId) public view returns (address) {
         for (uint i = 0; i < listBrevetti.length; i++) {
-            if (keccak256(abi.encodePacked(listBrevetti[i])) == keccak256(abi.encodePacked(brevettoId))) {
-                return listBrevetti[i];
+            if (keccak256(abi.encodePacked(listBrevetti[i].getId())) == keccak256(abi.encodePacked(brevettoId))) {
+                return listBrevetti[i].getUser();
             }
         }
+        revert("Brevetto non trovato");
     }
 
 

@@ -52,7 +52,6 @@ App3 = {
         // Ottieni il parametro dall'URL
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
-        var brevettoUser = null;
 
         // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
@@ -60,9 +59,7 @@ App3 = {
             
             factoryInstance = await App3.contracts.Factory.deployed();
             
-            brevettoUser = factoryInstance.getBrevetto(brevettoId);
-            console.log("Mammt " + brevettoUser.getUser);
-            
+            const creatorAddress = await factoryInstance.getBrevettoUser(brevettoId);
 
             const brevettoDetails = await fetchIPFSData(brevettoId);
             console.log("Dettagli del brevetto:", brevettoDetails);
@@ -73,7 +70,7 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
 
-            var isVoter = await check(brevettoUser);
+            var isVoter = await check(creatorAddress);
             
             if(!isVoter)
             {
@@ -102,15 +99,15 @@ App3 = {
     
 };
 
-async function check(brevettoUser) {
+async function check(creatorAddress) {
     try {
         var brevettiInstance = await App3.contracts.Brevetti.deployed();
         const list = await brevettiInstance.getVoterAddresses();
 
         console.log("Account corrente:", App3.account);
-        console.log("Creatore del brevetto:", brevettoUser);
+        console.log("Creatore del brevetto:", creatorAddress);
         
-        if (App3.account === brevettoUser) {
+        if (App3.account.toUpperCase() === creatorAddress.toUpperCase()) {
             console.log("Sei l'utente creatore del brevetto.");
             return true;
         }
