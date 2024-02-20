@@ -47,13 +47,13 @@ App = {
         
         });
 
-        $.getJSON('../Brevetti.json', function(data) {
+        $.getJSON('../Brevetto.json', function(data) {
             // Get the necessary contract artifact file and instantiate it with @truffle/contract
             var brevetti = data;
-            App.contracts.Brevetti = TruffleContract(brevetti);
+            App.contracts.Brevetto = TruffleContract(brevetti);
           
             // Set the provider for our contract
-            App.contracts.Brevetti.setProvider(App.web3Provider);
+            App.contracts.Brevetto.setProvider(App.web3Provider);
           
           });
         
@@ -90,6 +90,7 @@ App = {
             state: "attesa",
             user: App.account
         });
+        const amountToSend = web3.utils.toWei('3', 'ether');
 
         const ipfs = window.ipfs;
         const result = await ipfs.add(brevettoData);
@@ -104,7 +105,7 @@ App = {
             App.contracts.Factory.deployed().then(function(instance) {
               factoryInstance = instance;
                 
-              return factoryInstance.createBrevetto(cid, nomeBrevetto, App.account, {from:App.account});
+              return factoryInstance.createBrevetto(cid, nomeBrevetto, App.account, {from:App.account, value: amountToSend});
             }).catch(function(err) {
               console.log(err.message);
             });

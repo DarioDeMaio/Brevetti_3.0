@@ -34,12 +34,12 @@ App3 = {
             // Set the provider for our contract
             App3.contracts.Factory.setProvider(App3.web3Provider);
         
-            $.getJSON('../Brevetti.json', function(brevettiData) {
+            $.getJSON('../Brevetto.json', function(brevettiData) {
                 var brevetti = brevettiData;
-                App3.contracts.Brevetti = TruffleContract(brevetti);
+                App3.contracts.Brevetto = TruffleContract(brevetti);
             
                 // Set the provider for our contract
-                App3.contracts.Brevetti.setProvider(App3.web3Provider);
+                App3.contracts.Brevetto.setProvider(App3.web3Provider);
             
                 // Call getList only after both JSON files are loaded
                 App3.getBrevettoDetails();
@@ -101,7 +101,7 @@ App3 = {
 
 async function check(creatorAddress) {
     try {
-        var brevettiInstance = await App3.contracts.Brevetti.deployed();
+        var brevettiInstance = await App3.contracts.Brevetto.deployed();
         const list = await brevettiInstance.getVoterAddresses();
 
         console.log("Account corrente:", App3.account);
@@ -127,8 +127,14 @@ function vote(v){
                 console.log(error);
             }
     
-            App3.contracts.Brevetti.deployed().then(function(instance) {
+            App3.contracts.Brevetto.deployed().then(function(instance) {
                 brevettiInstance = instance;
+                if (v === 'Rifiutato') {
+                    console.log("Rifiutato")
+                    const amountToSend = web3.utils.toWei('1', 'ether'); // Invia 0.2 Ether
+                    // Invia l'importo specificato insieme alla chiamata di funzione
+                    return brevettiInstance.addVoter(v, { from: App3.account, value: amountToSend });
+                }
                 return brevettiInstance.addVoter(v, {from: App3.account});
             }).catch(function(err) {
                 console.log(err.message);

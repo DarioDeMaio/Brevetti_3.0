@@ -1,4 +1,4 @@
-const Brevetti = artifacts.require("Brevetti");
+const Brevetti = artifacts.require("Factory");
 
 module.exports = function(deployer){
     deployer.deploy(Brevetti);

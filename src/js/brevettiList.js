@@ -41,12 +41,12 @@ App2 = {
             // Set the provider for our contract
             App2.contracts.Factory.setProvider(App2.web3Provider);
         
-            $.getJSON('../Brevetti.json', function(brevettiData) {
+            $.getJSON('../Brevetto.json', function(brevettiData) {
                 var brevetti = brevettiData;
-                App2.contracts.Brevetti = TruffleContract(brevetti);
+                App2.contracts.Brevetto = TruffleContract(brevetti);
             
                 // Set the provider for our contract
-                App2.contracts.Brevetti.setProvider(App2.web3Provider);
+                App2.contracts.Brevetto.setProvider(App2.web3Provider);
             
                 // Call getList only after both JSON files are loaded
                 App2.getList();

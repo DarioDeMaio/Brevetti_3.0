@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.22;
 //creating smart contract 
-import "./Brevetti.sol";
+import "./Brevetto.sol";
 pragma experimental ABIEncoderV2;
 
 contract Factory{
-    Brevetti[] listBrevetti;
+    Brevetto[] listBrevetti;
 
     constructor() public{}
 
-    function createBrevetto(string memory _id, string memory _name, address user) public{
-        Brevetti b = new Brevetti();
+    function createBrevetto(string memory _id, string memory _name, address user) public payable{
+        Brevetto b = new Brevetto();
         b.setId(_id);
         b.setName(_name);
         b.setUser(user);
         b.setState("attesa");
+        b.setBalance(msg.value);
         listBrevetti.push(b);
     }
 
