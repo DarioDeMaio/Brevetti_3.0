@@ -11,6 +11,7 @@ contract Brevetto{
     mapping(address=>string) private vote;
     address[] private voterAddresses;
 
+    event LogBalance(uint balance);
     constructor() public {
         balance = address(this).balance;
     }
@@ -90,7 +91,7 @@ contract Brevetto{
     }
 
 
-    function getWinner() public returns (string memory) {
+    function getWinner() public returns (string memory winnerType, uint winnerVotes) {
         require(voterAddresses.length > 0);
         uint confirmedVotes = 0;
         uint rejectedVotes = 0;
@@ -106,31 +107,39 @@ contract Brevetto{
 
         if (confirmedVotes >= rejectedVotes) {
             setState("Confermato");
-            return "Confermato";
+            return ("Confermato", confirmedVotes);
         } else if (rejectedVotes > confirmedVotes) {
             setState("Rifiutato");
-            return "Rifiutato";
+            return ("Rifiutato", rejectedVotes);
         }
     }
 
 
-    function rewardWinners() public payable{
-        string memory winner = getWinner();
-        if(keccak256(abi.encodePacked(winner)) == keccak256(abi.encodePacked("Confermato"))){
-            for (uint i = 0; i < voterAddresses.length; i++) {
-                string memory voteType = vote[voterAddresses[i]];
-                if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winner))) {
-                    //payable(voterAddresses[i]).transfer(i sord);
-                }
-            }
+    function rewardWinners() public{
+        emit LogBalance(balance);
+        (string memory winnerType, uint winnerVotes) = getWinner();
+        uint amountToSend = 0;
 
-        }else if(keccak256(abi.encodePacked(winner)) == keccak256(abi.encodePacked("Rifiutato"))){
-            for (uint i = 0; i < voterAddresses.length; i++) {
-                string memory voteType = vote[voterAddresses[i]];
-                if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winner))) {
-                    //payable(voterAddresses[i]).transfer(i sord);
-                }
+        if (keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))) {
+            amountToSend = balance / winnerVotes;
+        } else if (keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Rifiutato"))) {
+            amountToSend = (balance / winnerVotes) + 1;
+        }
+
+        require(amountToSend > 0, "Nessun importo da trasferire");
+
+        // Verifica che il saldo sia sufficiente
+        require(balance >= amountToSend * winnerVotes, "Fondi insufficienti nel contratto");
+
+        // Trasferisci i fondi ai vincitori
+        for (uint i = 0; i < voterAddresses.length; i++) {
+            string memory voteType = vote[voterAddresses[i]];
+            if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
+                address(uint160(voterAddresses[i])).transfer(amountToSend * 1 ether);
             }
         }
-    }
+
+        // Aggiorna il saldo del contratto
+        balance -= amountToSend * winnerVotes;
+        }
 }

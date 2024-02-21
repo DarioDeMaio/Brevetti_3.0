@@ -189,8 +189,8 @@ async function reward(brevettoId)
             } 
         }
 
-        winner = await brevettiInstance.getWinner.call({from: App3.account});
-        console.log("Winner "+ winner);
+        await brevettiInstance.rewardWinners({from:App3.account});
+        console.log("Fatto");
     } catch (error) {
         console.error("Errore durante le reward:", error);
     }
