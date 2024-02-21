@@ -7,11 +7,12 @@ contract Brevetto{
     string private  name;
     address private  user;
     string private  state;
-    uint private balance=0;
+    uint private balance;
     mapping(address=>string) private vote;
     address[] private voterAddresses ;
 
     constructor() {
+        balance = 0;
     }
 
     function addBalance(uint et) private {
