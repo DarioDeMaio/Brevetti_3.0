@@ -175,23 +175,23 @@ async function getListBrevetti() {
     }
 }
 
-async function reward(brevettoId)
-{
+async function reward(brevettoId) {
     var winner = null;
     var brevettiInstance = null;
     var list = await getListBrevetti();
     try {
-
-        for(let i = 0; i < list.length; i++){
+        for(let i = 0; i < list.length; i++) {
             brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
-            if(brevettoId === await brevettiInstance.getId()){
+            if(brevettoId === await brevettiInstance.getId()) {
+                const contractAddress = brevettiInstance.address;
+                const contractBalance = await web3.eth.getBalance(contractAddress);
+                console.log("Contract Balance: ", web3.utils.fromWei(contractBalance, 'ether'), " ether");
                 break;
             } 
         }
-
-        winner = await brevettiInstance.getWinner.call({from: App3.account});
-        console.log("Winner "+ winner);
+        winner = await brevettiInstance.rewardWinners.call();
+        //console.log("Winner "+ winner);
     } catch (error) {
-        console.error("Errore durante le reward:", error);
+        console.error("Error during rewards:", error);
     }
 }

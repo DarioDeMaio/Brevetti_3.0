@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.8.22;
+pragma solidity >=0.4.20 <=0.8.19;
 //creating smart contract 
 import "./Brevetto.sol";
 pragma experimental ABIEncoderV2;
@@ -7,15 +7,17 @@ pragma experimental ABIEncoderV2;
 contract Factory{
     Brevetto[] listBrevetti;
 
-    constructor() public{}
+    constructor() {}
 
     function createBrevetto(string memory _id, string memory _name, address user) public payable{
+        require(msg.value == 3 ether);
         Brevetto b = new Brevetto();
         b.setId(_id);
         b.setName(_name);
         b.setUser(user);
         b.setState("attesa");
-        b.setBalance(msg.value);
+        b.setBalance{value: 3 ether}();
+        //b.setBalance(address(this).balance);
         listBrevetti.push(b);
     }
 
