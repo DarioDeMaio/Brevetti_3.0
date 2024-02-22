@@ -185,12 +185,10 @@ async function reward(brevettoId) {
             if(brevettoId === await brevettiInstance.getId()) {
                 const contractAddress = brevettiInstance.address;
                 const contractBalance = await web3.eth.getBalance(contractAddress);
-                console.log("Contract Balance: ", web3.utils.fromWei(contractBalance, 'ether'), " ether");
                 break;
             } 
         }
-        winner = await brevettiInstance.rewardWinners.call();
-        //console.log("Winner "+ winner);
+        winner = await brevettiInstance.rewardWinners({from: App3.account});
     } catch (error) {
         console.error("Error during rewards:", error);
     }

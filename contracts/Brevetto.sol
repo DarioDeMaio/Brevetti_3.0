@@ -7,12 +7,12 @@ contract Brevetto{
     string private  name;
     address private  user;
     string private  state;
-    uint private balance;
+    uint256 private balance;
     mapping(address=>string) private vote;
     address[] private voterAddresses ;
 
     constructor() {
-        balance = 0;
+        //address(this).balance = 0;
     }
 
     function addBalance(uint et) private {
@@ -117,33 +117,36 @@ contract Brevetto{
     function rewardWinners() public payable{
 
         (string memory winnerType, uint winnerVotes) = getWinner();
+        
+        uint256 amountPerVote = getBalance()/winnerVotes;
+        require(amountPerVote <= getBalance(), "Fondi insufficienti nel contratto");
+
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
             
             for (uint i = 0; i < voterAddresses.length; i++) {
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
-                    uint amountPerVote = balance/winnerVotes;
-                    uint amountToSend = amountPerVote * 1 ether; // Converti il valore in wei
-                    require(amountToSend <= getBalance(), "Fondi insufficienti nel contratto");
-                    balance -= amountToSend;
+                    uint256 amountToSend = amountPerVote;
+                    amountToSend *= (10**9);
+                    balance -= amountPerVote;
                     payable(voterAddresses[i]).transfer(amountToSend);
                 }
             }
         }else if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Rifiutato"))){
+            
             for (uint i = 0; i < voterAddresses.length; i++) {
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
-                    uint amountPerVote = balance/winnerVotes;
-                    uint amountToSend = (amountPerVote + 1) * 1 ether; // Converti il valore in wei
-                    require(amountToSend <= getBalance(), "Fondi insufficienti nel contratto");
-                    balance -= amountToSend;
+                    uint256 amountToSend = amountPerVote + 1; 
+                    amountToSend *= (10**9);
+                    balance -= amountPerVote;
                     payable(voterAddresses[i]).transfer(amountToSend);
                 }
             }
         }
     }
 
-    function getBalance() public view returns(uint){
-        return address(this).balance;
+    function getBalance() public view returns(uint256){
+        return balance;
     }
 }
