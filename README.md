@@ -18,7 +18,6 @@ Per eseguire il progetto, è necessario avere installati i seguenti componenti:
 ```bash
 
 git clone https://github.com/DarioDeMaio/Brevetti_3.0.git 
-cd Brevetti_3.0
 
 ```
 - Installa le dipendenze:
