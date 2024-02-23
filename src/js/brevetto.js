@@ -69,7 +69,7 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Data di Inserimento:</strong> " + brevettoDetails.dataFormattata + "</p>");
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
-            brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\")'>Reward</button>");
+            brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\", " + JSON.stringify(brevettoDetails) + ")'>Reward</button>");
 
 
 
@@ -105,8 +105,6 @@ App3 = {
 
 async function check(creatorAddress, factoryInstance, brevettoId) {
     try {
-        //var brevettiInstance = await App3.contracts.Brevetto.deployed();
-        //var brevetti = await factoryInstance.getList();
         var list= await getListBrevetti();
         
         var brevettiInstance = null;
@@ -128,8 +126,6 @@ async function check(creatorAddress, factoryInstance, brevettoId) {
             }
         }
         return false;
-        //return addresses.some(addr => App3.account.toUpperCase() === addr.toUpperCase());
-        //return false;
     } catch (error) {
         console.error("Errore durante il controllo:", error);
         return false;
@@ -163,7 +159,7 @@ async function vote(v, brevettoId){
     }
 }
 
-// Chiamata asincrona per ottenere l'elenco dei brevetti
+
 async function getListBrevetti() {
     try {
         const factoryInstance = await App3.contracts.Factory.deployed();
@@ -175,7 +171,7 @@ async function getListBrevetti() {
     }
 }
 
-async function reward(brevettoId) {
+async function reward(brevettoId, brevettoDetails) {
     var winner = null;
     var brevettiInstance = null;
     var list = await getListBrevetti();
@@ -183,12 +179,33 @@ async function reward(brevettoId) {
         for(let i = 0; i < list.length; i++) {
             brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
             if(brevettoId === await brevettiInstance.getId()) {
-                const contractAddress = brevettiInstance.address;
-                const contractBalance = await web3.eth.getBalance(contractAddress);
+                //const contractAddress = brevettiInstance.address;
+                //const contractBalance = await web3.eth.getBalance(contractAddress);
                 break;
             } 
         }
-        winner = await brevettiInstance.rewardWinners({from: App3.account});
+        await brevettiInstance.rewardWinners({from: App3.account});
+
+        const updatedState = await brevettiInstance.getState();
+
+        let brevettoData = JSON.stringify({
+            nomeBrevetto: brevettoDetails.nomeBrevetto,
+            descrizione: brevettoDetails.descrizione,
+            dataFormattata : brevettoDetails.dataFormattata,
+            state: updatedState,
+            user: brevettoDetails.user
+        });
+
+        const ipfs = window.ipfs;
+        const result = await ipfs.add(brevettoData);
+        const cid = result.path;
+
+        console.log(cid);
+
+        await brevettiInstance.setId(cid, {from: App3.account});
+        
+        window.location.href = "../html/brevettiList.html";
+        
     } catch (error) {
         console.error("Error during rewards:", error);
     }

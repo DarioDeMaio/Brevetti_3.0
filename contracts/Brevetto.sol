@@ -119,7 +119,6 @@ contract Brevetto{
         (string memory winnerType, uint winnerVotes) = getWinner();
         
         uint256 amountPerVote = getBalance()/winnerVotes;
-        require(amountPerVote <= getBalance(), "Fondi insufficienti nel contratto");
 
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
             
@@ -127,9 +126,9 @@ contract Brevetto{
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
                     uint256 amountToSend = amountPerVote;
-                    amountToSend *= (10**9);
+                    amountToSend *= (10**18);
                     balance -= amountPerVote;
-                    payable(voterAddresses[i]).transfer(amountToSend);
+                    payable(voterAddresses[i]).transfer(300000000000000000);
                 }
             }
         }else if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Rifiutato"))){
@@ -138,9 +137,9 @@ contract Brevetto{
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
                     uint256 amountToSend = amountPerVote + 1; 
-                    amountToSend *= (10**9);
+                    amountToSend *= (10**18);
                     balance -= amountPerVote;
-                    payable(voterAddresses[i]).transfer(amountToSend);
+                    payable(voterAddresses[i]).transfer(1300000000000000000);
                 }
             }
         }
