@@ -17,7 +17,7 @@ Per eseguire il progetto, è necessario avere installati i seguenti componenti:
 - Clona il repository:
 ```bash
 
-git clone 
+git clone https://github.com/DarioDeMaio/Brevetti_3.0.git 
 cd Brevetti_3.0
 
 ```
