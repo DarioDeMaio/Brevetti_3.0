@@ -37,10 +37,10 @@ truffle migrate
 - Inserisci le 12 keyword di MNEMONIC (Ganache) in Metamask
 - Inserisci una password
 - Aggiungi una rete manualmente:
-  a. Nome rete = nome_Rete
-  b. Host RPC = rpc_server_on_ganache
-  c. Chain ID = 1337
-  d. Simbolo moneta = ETH
+  - Nome rete = nome_Rete
+  - Host RPC = rpc_server_on_ganache
+  - Chain ID = 1337
+  - Simbolo moneta = ETH
 - Esegui il progetto:
 ```bash
 
