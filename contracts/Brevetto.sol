@@ -118,16 +118,16 @@ contract Brevetto{
 
         (string memory winnerType, uint winnerVotes) = getWinner();
         
-        uint256 amountPerVote = getBalance()/winnerVotes;
+        //uint256 amountPerVote = getBalance()/winnerVotes;
 
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
             
             for (uint i = 0; i < voterAddresses.length; i++) {
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
-                    uint256 amountToSend = amountPerVote;
-                    amountToSend *= (10**18);
-                    balance -= amountPerVote;
+                    //uint256 amountToSend = amountPerVote;
+                    //amountToSend *= (10**18);
+                    //balance -= amountPerVote;
                     payable(voterAddresses[i]).transfer(300000000000000000);
                 }
             }
@@ -136,9 +136,9 @@ contract Brevetto{
             for (uint i = 0; i < voterAddresses.length; i++) {
                 string memory voteType = vote[voterAddresses[i]];
                 if (keccak256(abi.encodePacked(voteType)) == keccak256(abi.encodePacked(winnerType))) {
-                    uint256 amountToSend = amountPerVote + 1; 
-                    amountToSend *= (10**18);
-                    balance -= amountPerVote;
+                    //uint256 amountToSend = amountPerVote + 1; 
+                    //amountToSend *= (10**18);
+                    //balance -= amountPerVote;
                     payable(voterAddresses[i]).transfer(1300000000000000000);
                 }
             }
