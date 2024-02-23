@@ -8,10 +8,10 @@ Il progetto in esame è stato realizzato per il corso di "Sicurezza dei Dati", p
 
 ## Requisiti
 Per eseguire il progetto, è necessario avere installati i seguenti componenti:
-- Node.js
-- Truffle
-- Ganache
-- Web3.js
+- [Node.js](https://nodejs.org/en/download)
+- [Truffle](https://www.npmjs.com/package/truffle)
+- [Ganache](https://trufflesuite.com/ganache/)
+- Estensione Metamask
 
 ## Configurazione del Progetto
 - Clona il repository:
@@ -19,7 +19,6 @@ Per eseguire il progetto, è necessario avere installati i seguenti componenti:
 
 git clone 
 cd Brevetti_3.0
-
 
 ```
 - Installa le dipendenze:
