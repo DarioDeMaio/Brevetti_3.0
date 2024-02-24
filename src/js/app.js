@@ -26,7 +26,6 @@ App = {
         }
         web3 = new Web3(App.web3Provider);
     
-    
         return App.initContract();
       },
 
@@ -48,7 +47,6 @@ App = {
           
           });
         
-    
         return App.bindEvents();
       },
 
@@ -64,12 +62,11 @@ App = {
 
         var nomeBrevetto = document.getElementById('nomeBrevetto').value;
         var descrizione = document.getElementById('descrizione').value;
+        
         var dataCorrente = new Date();
-
         var anno = dataCorrente.getFullYear();
         var mese = dataCorrente.getMonth() + 1; 
         var giorno = dataCorrente.getDate();
-
         var dataFormattata = anno + "-" + mese + "-" + giorno;
 
         let brevettoData = JSON.stringify({

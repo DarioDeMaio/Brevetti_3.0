@@ -1,6 +1,4 @@
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.4.20 <=0.8.19;
-//creating smart contract 
+pragma solidity >=0.4.20 <=0.8.19; 
 import "./Brevetto.sol";
 pragma experimental ABIEncoderV2;
 
@@ -41,5 +39,4 @@ contract Factory{
         }
         revert("Brevetto non trovato");
     }
-
 }

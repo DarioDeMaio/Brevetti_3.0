@@ -5,7 +5,6 @@ App3 = {
     init: async function () {
         await App3.initWeb3();
     },
-    
 
     initWeb3: async function () {
         if (window.ethereum) {
@@ -123,7 +122,6 @@ async function check(creatorAddress, factoryInstance, brevettoId) {
     }
 }
 
-
 async function vote(v, brevettoId){
     try {
         var list = await getListBrevetti();
@@ -149,7 +147,6 @@ async function vote(v, brevettoId){
         console.error("Errore durante il voto:", error);
     }
 }
-
 
 async function getListBrevetti() {
     try {

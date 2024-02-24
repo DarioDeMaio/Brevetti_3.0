@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.20 <=0.8.19;
 pragma experimental ABIEncoderV2;
 
@@ -76,7 +75,6 @@ contract Brevetto{
         user = _user;
     } 
 
-
     function getState() public view returns (string memory){
         return state;
     }
@@ -90,7 +88,6 @@ contract Brevetto{
             state = _state;
         }
     }
-
 
     function getWinner() private returns (string memory winnerType, uint winnerVotes) {
         require(voterAddresses.length > 0);

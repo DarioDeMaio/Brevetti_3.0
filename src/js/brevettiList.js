@@ -24,7 +24,6 @@ App2 = {
         }
         web3 = new Web3(App2.web3Provider);
     
-    
         return App2.initContract();
       },
     
