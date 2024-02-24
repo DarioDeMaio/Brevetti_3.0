@@ -17,7 +17,7 @@ contract Factory{
         b.setUser(user);
         b.setState("attesa");
         b.setBalance{value: 3 ether}();
-        //b.setBalance(address(this).balance);
+        
         listBrevetti.push(b);
     }
 

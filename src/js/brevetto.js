@@ -31,30 +31,25 @@ App3 = {
             var factory = factoryData;
             App3.contracts.Factory = TruffleContract(factory);
         
-            // Set the provider for our contract
             App3.contracts.Factory.setProvider(App3.web3Provider);
         
             $.getJSON('../Brevetto.json', function(brevettiData) {
                 var brevetti = brevettiData;
                 App3.contracts.Brevetto = TruffleContract(brevetti);
             
-                // Set the provider for our contract
                 App3.contracts.Brevetto.setProvider(App3.web3Provider);
             
-                // Call getList only after both JSON files are loaded
                 App3.getBrevettoDetails();
             });
         });
     },
     
 
-    getBrevettoDetails: async function () {
-        // Ottieni il parametro dall'URL
+    getBrevettoDetails: async function () {L
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
         
 
-        // Ottieni i dettagli del brevetto tramite l'ID dalla blockchain
         var factoryInstance;
         try {
             
@@ -71,8 +66,6 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
             brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\", " + JSON.stringify(brevettoDetails) + ")'>Reward</button>");
 
-
-
             var isVoter = await check(creatorAddress, factoryInstance, brevettoId);
             
             if(!isVoter)
@@ -88,7 +81,6 @@ App3 = {
                     
                 });
     
-                
                 $("#rifiutoBtn").on("click", function () {
                     document.getElementById("rifiutoBtn").disabled = true;
                     document.getElementById("accettazioneBtn").disabled = true;
@@ -100,7 +92,6 @@ App3 = {
             console.error("Errore durante il recupero dei dettagli del brevetto:", error);
         }
     }
-    
 };
 
 async function check(creatorAddress, factoryInstance, brevettoId) {
@@ -179,8 +170,6 @@ async function reward(brevettoId, brevettoDetails) {
         for(let i = 0; i < list.length; i++) {
             brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
             if(brevettoId === await brevettiInstance.getId()) {
-                //const contractAddress = brevettiInstance.address;
-                //const contractBalance = await web3.eth.getBalance(contractAddress);
                 break;
             } 
         }

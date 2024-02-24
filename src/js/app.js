@@ -9,23 +9,18 @@ App = {
 
     initWeb3: async function() {
     
-        // Modern dapp browsers...
         if (window.ethereum) {
           App.web3Provider = window.ethereum;
           try {
-              // Request account access
               await window.ethereum.request({ method: 'eth_requestAccounts' });
               App.account = window.ethereum.selectedAddress;
           } catch (error) {
-              // User denied account access...
               console.error("User denied account access")
           }
       }
-        // Legacy dapp browsers...
         else if (window.web3) {
           App.web3Provider = window.web3.currentProvider;
         }
-        // If no injected web3 instance is detected, fall back to Ganache
         else {
           App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
         }
@@ -38,21 +33,17 @@ App = {
       initContract: function() {
     
         $.getJSON('../Factory.json', function(data) {
-          // Get the necessary contract artifact file and instantiate it with @truffle/contract
           var factory = data;
           App.contracts.Factory = TruffleContract(factory);
         
-          // Set the provider for our contract
           App.contracts.Factory.setProvider(App.web3Provider);
         
         });
 
         $.getJSON('../Brevetto.json', function(data) {
-            // Get the necessary contract artifact file and instantiate it with @truffle/contract
             var brevetti = data;
             App.contracts.Brevetto = TruffleContract(brevetti);
           
-            // Set the provider for our contract
             App.contracts.Brevetto.setProvider(App.web3Provider);
           
           });
