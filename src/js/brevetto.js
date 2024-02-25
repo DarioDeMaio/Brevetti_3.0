@@ -44,7 +44,7 @@ App3 = {
     },
     
 
-    getBrevettoDetails: async function () {L
+    getBrevettoDetails: async function () {
         const urlParams = new URLSearchParams(window.location.search);
         const brevettoId = urlParams.get('id');
         
@@ -152,7 +152,6 @@ async function getListBrevetti() {
     try {
         const factoryInstance = await App3.contracts.Factory.deployed();
         const brevettiList = factoryInstance.getListBrevetti();
-        
         return brevettiList;
     } catch (error) {
         console.error("Errore durante il recupero dell'elenco dei brevetti:", error);
@@ -170,25 +169,42 @@ async function reward(brevettoId, brevettoDetails) {
                 break;
             } 
         }
-        await brevettiInstance.rewardWinners({from: App3.account});
+        console.log(await brevettiInstance.getExpiryTime.call());
+        let creationTime = await brevettiInstance.getCreationTime.call();
+        let date = new Date(creationTime * 1000); // moltiplica per 1000 perché JavaScript lavora con millisecondi
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        console.log("Ora:", hour);
+        console.log("Minuto:", minute);
+        console.log("Secondo:", second);
+        
+        try {
+            await brevettiInstance.rewardWinners({from: App3.account});
+        } catch (error) {
+            return;
+        }
 
         const updatedState = await brevettiInstance.getState();
 
-        let brevettoData = JSON.stringify({
-            nomeBrevetto: brevettoDetails.nomeBrevetto,
-            descrizione: brevettoDetails.descrizione,
-            dataFormattata : brevettoDetails.dataFormattata,
-            state: updatedState,
-            user: brevettoDetails.user
-        });
+            let brevettoData = JSON.stringify({
+                nomeBrevetto: brevettoDetails.nomeBrevetto,
+                descrizione: brevettoDetails.descrizione,
+                dataFormattata : brevettoDetails.dataFormattata,
+                state: updatedState,
+                user: brevettoDetails.user
+            });
 
-        const ipfs = window.ipfs;
-        const result = await ipfs.add(brevettoData);
-        const cid = result.path;
+            const ipfs = window.ipfs;
+            const result = await ipfs.add(brevettoData);
+            const cid = result.path;
 
-        console.log(cid);
+            console.log(cid);
 
-        await brevettiInstance.setId(cid, {from: App3.account});
+            await brevettiInstance.setId(cid, {from: App3.account});
+
+        
         
         window.location.href = "../html/brevettiList.html";
         

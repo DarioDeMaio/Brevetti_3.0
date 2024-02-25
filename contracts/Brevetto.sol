@@ -8,9 +8,22 @@ contract Brevetto{
     string private  state;
     uint256 private balance;
     mapping(address=>string) private vote;
-    address[] private voterAddresses ;
+    address[] private voterAddresses;
+    uint creationTime;
+    uint expiryTime = 45;
 
-    constructor() {}
+    constructor() {
+        creationTime = block.timestamp;
+        //expiryTime = 45;
+    }
+
+    function getCreationTime() public view returns(uint){
+        return creationTime;
+    }
+    
+    function getExpiryTime() public view returns(uint){
+        return expiryTime;
+    }
 
     function addBalance(uint et) private {
         require(et == 1 ether);
@@ -41,6 +54,7 @@ contract Brevetto{
     }
 
     function addVoter(string memory _vote) public payable{
+        require((block.timestamp - creationTime) <= 60, "Tempo scaduto");
         require(bytes(vote[msg.sender]).length == 0);
         require(msg.sender != user);
         if (keccak256(abi.encodePacked(_vote)) == keccak256(abi.encodePacked("Rifiutato"))) {
@@ -114,7 +128,8 @@ contract Brevetto{
 
 
     function rewardWinners() public payable{
-
+        require(keccak256(abi.encodePacked(getState())) == keccak256(abi.encodePacked("attesa")));
+        require((block.timestamp - creationTime) >= 60, "Tempo scaduto");
         (string memory winnerType, uint winnerVotes) = getWinner();
         
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
