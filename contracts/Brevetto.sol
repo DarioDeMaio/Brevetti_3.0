@@ -9,20 +9,18 @@ contract Brevetto{
     uint256 private balance;
     mapping(address=>string) private vote;
     address[] private voterAddresses;
-    uint creationTime;
-    uint expiryTime = 45;
+    uint256 creationTime;
 
     constructor() {
-        creationTime = block.timestamp;
-        //expiryTime = 45;
+        
+    }
+
+    function setCreationTime(uint256 _date) public {
+        creationTime = _date;
     }
 
     function getCreationTime() public view returns(uint){
         return creationTime;
-    }
-    
-    function getExpiryTime() public view returns(uint){
-        return expiryTime;
     }
 
     function addBalance(uint et) private {
@@ -53,8 +51,8 @@ contract Brevetto{
         return (voterAddresses, votesList);
     }
 
-    function addVoter(string memory _vote) public payable{
-        require((block.timestamp - creationTime) <= 60, "Tempo scaduto");
+    function addVoter(string memory _vote, uint256 time) public payable{
+        require((time - creationTime) <= 60000, "Tempo scaduto");
         require(bytes(vote[msg.sender]).length == 0);
         require(msg.sender != user);
         if (keccak256(abi.encodePacked(_vote)) == keccak256(abi.encodePacked("Rifiutato"))) {
@@ -127,9 +125,9 @@ contract Brevetto{
     }
 
 
-    function rewardWinners() public payable{
+    function rewardWinners(uint256 time) public payable{
         require(keccak256(abi.encodePacked(getState())) == keccak256(abi.encodePacked("attesa")));
-        require((block.timestamp - creationTime) >= 60, "Tempo scaduto");
+        require((time - creationTime) >= 60000, "Tempo scaduto");
         (string memory winnerType, uint winnerVotes) = getWinner();
         
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
@@ -150,4 +148,13 @@ contract Brevetto{
             }
         }
     }
+
+    function checkExpiration(uint256 time) public returns(bool){
+        if((time - creationTime) >= 60000){
+            return false;
+        }
+        return true;
+    }
+
+    
 }

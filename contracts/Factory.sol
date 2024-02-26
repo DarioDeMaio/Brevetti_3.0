@@ -7,7 +7,7 @@ contract Factory{
 
     constructor() {}
 
-    function createBrevetto(string memory _id, string memory _name, address user) public payable{
+    function createBrevetto(string memory _id, string memory _name, address user, uint256 date) public payable{
         require(msg.value == 3 ether);
         Brevetto b = new Brevetto();
         b.setId(_id);
@@ -15,7 +15,7 @@ contract Factory{
         b.setUser(user);
         b.setState("attesa");
         b.setBalance{value: 3 ether}();
-        
+        b.setCreationTime(date);
         listBrevetti.push(b);
     }
 

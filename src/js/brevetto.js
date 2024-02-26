@@ -63,13 +63,11 @@ App3 = {
             brevettoDetailsDiv.append("<p><strong>Data di Inserimento:</strong> " + brevettoDetails.dataFormattata + "</p>");
             brevettoDetailsDiv.append("<p><strong>Descrizione:</strong> " + brevettoDetails.descrizione + "</p>");
             brevettoDetailsDiv.append("<p><strong>Stato:</strong> " + brevettoDetails.state + "</p>");
-            brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\", " + JSON.stringify(brevettoDetails) + ")'>Reward</button>");
-
-            var isVoter = await check(creatorAddress, factoryInstance, brevettoId);
             
-            if(!isVoter)
+            var isVoter = await check(creatorAddress, brevettoId);
+            var time = await checkExpiration(brevettoId);
+            if(!isVoter && time)
             {
-                
                 brevettoDetailsDiv.append('<button id="accettazioneBtn" class="btn btn-success" style="margin-right: 20px;">Accettazione</button>');
                 brevettoDetailsDiv.append('<button id="rifiutoBtn" class="btn btn-danger">Rifiuto</button>');
 
@@ -86,14 +84,30 @@ App3 = {
                     vote("Rifiutato", brevettoId);
                     
                 });
-            }            
+            }
+            if(isVoter && !time){
+                brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\", " + JSON.stringify(brevettoDetails) + ")'>Reward</button>");
+            }        
         } catch (error) {
             console.error("Errore durante il recupero dei dettagli del brevetto:", error);
         }
     }
 };
+async function checkExpiration(brevettoId){
+    
+    var list= await getListBrevetti();
+    var brevettiInstance = null;
 
-async function check(creatorAddress, factoryInstance, brevettoId) {
+        for(let i = 0; i < list.length; i++){
+            brevettiInstance = await App3.contracts.Brevetto.at(list[i]);
+            if(brevettoId === await brevettiInstance.getId()){
+                break;
+            }
+        }
+        return await brevettiInstance.checkExpiration.call(Date.now());
+}
+
+async function check(creatorAddress, brevettoId) {
     try {
         var list= await getListBrevetti();
         
@@ -137,9 +151,9 @@ async function vote(v, brevettoId){
                     
                     if (v === 'Rifiutato') {
                         const amountToSend = web3.utils.toWei('1', 'ether');
-                        return brevettiInstance.addVoter(v, { from: App3.account, value: amountToSend });
+                        return brevettiInstance.addVoter(v, Date.now(),{ from: App3.account, value: amountToSend });
                     }
-                    return brevettiInstance.addVoter(v, {from: App3.account});
+                    return brevettiInstance.addVoter(v, Date.now(),{from: App3.account});
                 });
             }
         }
@@ -169,19 +183,9 @@ async function reward(brevettoId, brevettoDetails) {
                 break;
             } 
         }
-        console.log(await brevettiInstance.getExpiryTime.call());
-        let creationTime = await brevettiInstance.getCreationTime.call();
-        let date = new Date(creationTime * 1000); // moltiplica per 1000 perché JavaScript lavora con millisecondi
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-
-        console.log("Ora:", hour);
-        console.log("Minuto:", minute);
-        console.log("Secondo:", second);
         
         try {
-            await brevettiInstance.rewardWinners({from: App3.account});
+            await brevettiInstance.rewardWinners(Date.now(),{from: App3.account});
         } catch (error) {
             return;
         }

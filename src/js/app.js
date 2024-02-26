@@ -91,7 +91,7 @@ App = {
             App.contracts.Factory.deployed().then(function(instance) {
               factoryInstance = instance;
                 
-              return factoryInstance.createBrevetto(cid, nomeBrevetto, App.account, {from:App.account, value: amountToSend});
+              return factoryInstance.createBrevetto(cid, nomeBrevetto, App.account, Date.now(),{from:App.account, value: amountToSend});
             }).catch(function(err) {
               console.log(err.message);
             });
