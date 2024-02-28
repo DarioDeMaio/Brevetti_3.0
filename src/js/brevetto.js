@@ -85,7 +85,7 @@ App3 = {
                     
                 });
             }
-            if(isVoter && !time){
+            if(isVoter && !time && brevettoDetails.state == "attesa"){
                 brevettoDetailsDiv.append("<button id='reward' onClick='reward(\"" + brevettoId + "\", " + JSON.stringify(brevettoDetails) + ")'>Reward</button>");
             }        
         } catch (error) {
