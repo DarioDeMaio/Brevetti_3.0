@@ -126,6 +126,7 @@ contract Brevetto{
 
 
     function rewardWinners(uint256 time) public payable{
+        require(msg.sender == user);
         require(keccak256(abi.encodePacked(getState())) == keccak256(abi.encodePacked("attesa")));
         require((time - creationTime) >= 60000, "Tempo scaduto");
         (string memory winnerType, uint winnerVotes) = getWinner();
