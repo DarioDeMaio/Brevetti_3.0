@@ -2,10 +2,10 @@
 Il progetto in esame è stato realizzato per il corso di "Sicurezza dei Dati", presso l'Università degli Studi di Salerno. 
 
 ## Obiettivo
-Tale progetto mira a creare un sistema decentralizzato per la gestione dei brevetti utilizzando la blockchain. Gli utenti possono proporre brevetti e ricevere un resoconto dalla comunità degli altri partecipanti. La decisione sulla validità del brevetto avviene attraverso un processo di votazione, con incentivi finanziari per coloro che partecipano al processo. Di seguito, verrà descritto il funzionamento in dettaglio.
+Tale progetto mira a creare un sistema decentralizzato per la gestione dei brevetti utilizzando la blockchain. Gli utenti possono proporre un brevetto e ricevere un resoconto dalla comunità degli altri partecipanti, nel caso in cui venisse accettato. La decisione sulla validità del brevetto avviene attraverso un processo di votazione, con incentivi finanziari per coloro che partecipano al processo. Di seguito, verrà descritto il funzionamento in dettaglio.
 
 ## Funzionamento
-- Proposta del Brevetto: un utente può proporre un brevetto attraverso l'interfaccia web, compilando il form con i campi "Nome Brevetto" e "Descrizione".
+- Proposta del Brevetto: un utente può proporre un brevetto attraverso l'interfaccia web, compilando il form con i campi "Nome Brevetto" e "Descrizione". Il proprietario del brevetto pagherà 3 ETH.
 - Votazione: gli altri partecipanti hanno la possibilità di accettare o rifiutare il brevetto proposto entro un tempo limitato. Se un utente accetta, non è tenuto a pagare nulla, mentre in caso di rifiuto, l'utente paga 1 ETH.
 - Incentivi: se la maggioranza accetta il brevetto, viene incentivata con una quota in Ether. In caso contrario, se la maggioranza rifiuta, riceverà una quota in Ether più il ritorno dell'Ether inizialmente speso per rifiutare il brevetto.
 
