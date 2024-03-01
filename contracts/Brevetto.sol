@@ -52,9 +52,9 @@ contract Brevetto{
     }
 
     function addVoter(string memory _vote, uint256 time) public payable{
+        require(msg.sender != user);
         require((time - creationTime) <= 60000, "Tempo scaduto");
         require(bytes(vote[msg.sender]).length == 0);
-        require(msg.sender != user);
         if (keccak256(abi.encodePacked(_vote)) == keccak256(abi.encodePacked("Rifiutato"))) {
             addBalance(msg.value);
         }
