@@ -29,7 +29,7 @@ contract Brevetto{
     }
 
     function setBalance() public payable {
-        require(msg.value == 3 ether, "Il valore del saldo deve essere esattamente 3 ether");
+        require(msg.value == 3 ether, "Il valore del messaggio deve essere esattamente 3 ether");
         balance = msg.value;
     }
 
@@ -131,7 +131,7 @@ contract Brevetto{
     function rewardWinners(uint256 time) public payable{
         require(msg.sender == user);
         require(keccak256(abi.encodePacked(getState())) == keccak256(abi.encodePacked("attesa")));
-        require((time - creationTime) >= 60000, "Tempo scaduto");
+        require((time - creationTime) >= 60000, "Tempo non ancora scaduto");
         (string memory winnerType, uint winnerVotes) = getWinner();
         
         if(keccak256(abi.encodePacked(winnerType)) == keccak256(abi.encodePacked("Confermato"))){
