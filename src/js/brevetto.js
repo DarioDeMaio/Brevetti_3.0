@@ -118,8 +118,8 @@ async function check(creatorAddress, brevettoId) {
                 break;
             }
         }
-        var a = await brevettiInstance.getVotes();
-        var addresses = a[0];
+        var addresses = await brevettiInstance.getVotes();
+        //var addresses = a[0];
 
         if (App3.account.toUpperCase() === creatorAddress.toUpperCase()) {
             return true;
@@ -173,7 +173,6 @@ async function getListBrevetti() {
 }
 
 async function reward(brevettoId, brevettoDetails) {
-    var winner = null;
     var brevettiInstance = null;
     var list = await getListBrevetti();
     try {
